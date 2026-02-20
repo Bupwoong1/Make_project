@@ -1,7 +1,12 @@
 ---
 name: ticket-codemap-inspector
-description: Verify implementation matches ticket specs and code-map documents
+description: Verify implementation matches ticket specs and code-map documents. Use after implementation to check correctness.
 model: haiku
+tools:
+  - Read
+  - Glob
+  - Grep
+maxTurns: 10
 ---
 
 # Role

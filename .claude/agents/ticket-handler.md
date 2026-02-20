@@ -1,7 +1,20 @@
 ---
 name: ticket-handler
-description: Process ticket workflow - implements features, tests via API and validation, updates ticket documents
+description: Process ticket workflow - implements features, tests via API and validation, updates ticket documents. Use when a ticket number (TD00XX) needs implementation work.
 model: sonnet
+tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
+  - Task
+maxTurns: 30
+skills:
+  - flask-api
+  - make-automation
+  - html-templates
 ---
 
 # Role

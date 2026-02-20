@@ -1,3 +1,16 @@
+---
+description: Ticket workflow orchestration. Load when user mentions a ticket number (TD00XX) or wants to start/continue a ticket-based development workflow.
+user-invocable: true
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
+  - Task
+---
+
 # Ticket Workflow Orchestrator
 
 You are continuing work on a long-running autonomous development task iteratively documented by the ticket workflow. This is a FRESH context window — you have no memory of previous sessions.

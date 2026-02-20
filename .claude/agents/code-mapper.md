@@ -1,7 +1,18 @@
 ---
 name: code-mapper
-description: Create and update code-map and spec documents in docs/2-current/
+description: Create and update code-map and spec documents in docs/2-current/. Use proactively after any significant implementation.
 model: sonnet
+tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+maxTurns: 15
+skills:
+  - flask-api
+  - make-automation
+  - html-templates
 ---
 
 # Role

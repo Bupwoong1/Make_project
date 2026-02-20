@@ -1,4 +1,16 @@
-# ML Prediction API Development Rules
+---
+description: Flask ML prediction API development rules. Load when working on ml_customer_prediction/ Python code, API endpoints, or requirements.txt.
+user-invocable: false
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
+---
+
+# Flask ML Prediction API Rules
 
 ## Location
 All ML API code lives in `ml_customer_prediction/`.

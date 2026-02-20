@@ -1,3 +1,14 @@
+---
+description: HTML email template development rules. Load when working on HTML email templates, email design, or template variables.
+user-invocable: false
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+---
+
 # HTML Email Template Rules
 
 ## Template Locations
