@@ -1,0 +1,287 @@
+{
+    "name": "UALR School of Business - Prospective Student Major Information",
+    "flow": [
+        {
+            "id": 1,
+            "module": "google-sheets:watchRows",
+            "version": 2,
+            "parameters": {
+                "from": "drive",
+                "mode": "select",
+                "limit": 1,
+                "sheetId": "Form Responses 1",
+                "__IMTCONN__": 1234567,
+                "spreadsheetId": "/YOUR_SPREADSHEET_ID_HERE",
+                "tableFirstRow": "A1:E1",
+                "includesHeaders": true,
+                "valueRenderOption": "FORMATTED_VALUE",
+                "dateTimeRenderOption": "FORMATTED_STRING"
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 600
+                },
+                "restore": {
+                    "parameters": {
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "Form Responses 1"
+                        },
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "UALR_Prospective_Students"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes"
+                        },
+                        "valueRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted value"
+                        },
+                        "dateTimeRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted string"
+                        }
+                    }
+                },
+                "interface": [
+                    {
+                        "name": "__ROW_NUMBER__",
+                        "type": "number",
+                        "label": "Row number"
+                    },
+                    {
+                        "name": "__SPREADSHEET_ID__",
+                        "type": "text",
+                        "label": "Spreadsheet ID"
+                    },
+                    {
+                        "name": "__SHEET__",
+                        "type": "text",
+                        "label": "Sheet"
+                    },
+                    {
+                        "name": "0",
+                        "type": "text",
+                        "label": "Timestamp (A)"
+                    },
+                    {
+                        "name": "1",
+                        "type": "text",
+                        "label": "Full Name (B)"
+                    },
+                    {
+                        "name": "2",
+                        "type": "text",
+                        "label": "Email Address (C)"
+                    },
+                    {
+                        "name": "3",
+                        "type": "text",
+                        "label": "Major Preference (D)"
+                    },
+                    {
+                        "name": "4",
+                        "type": "text",
+                        "label": "Email Status (E)"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 600
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": 1234567,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Accounting Major",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Accounting",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "cc": [],
+                                "to": [
+                                    "{{1.`2`}}"
+                                ],
+                                "bcc": [],
+                                "from": "",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Welcome to UALR School of Business - Accounting</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\n        line-height: 1.6;\n        color: #333333;\n        background-color: #f4f4f4;\n    }\n    .container {\n        max-width: 600px;\n        margin: 0 auto;\n        background: #ffffff;\n    }\n    .header {\n        background: #7C2529;\n        padding: 30px 20px;\n        text-align: center;\n    }\n    .logo {\n        font-size: 28px;\n        font-weight: 700;\n        color: #ffffff;\n        letter-spacing: 1px;\n    }\n    .logo-subtitle {\n        color: #FDB913;\n        font-size: 14px;\n        margin-top: 5px;\n        letter-spacing: 2px;\n    }\n    .hero-banner {\n        background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%);\n        padding: 40px 20px;\n        text-align: center;\n        color: white;\n        border-bottom: 5px solid #FDB913;\n    }\n    .hero-banner h1 {\n        font-size: 32px;\n        margin-bottom: 10px;\n    }\n    .hero-banner p {\n        font-size: 18px;\n        color: #FDB913;\n    }\n    .content {\n        padding: 40px 30px;\n    }\n    .greeting {\n        font-size: 20px;\n        color: #7C2529;\n        margin-bottom: 20px;\n        font-weight: 600;\n    }\n    .intro {\n        background: #f9f9f9;\n        padding: 20px;\n        border-left: 4px solid #7C2529;\n        margin-bottom: 30px;\n    }\n    .intro h2 {\n        color: #7C2529;\n        font-size: 20px;\n        margin-bottom: 10px;\n    }\n    .intro p {\n        color: #555;\n        line-height: 1.8;\n    }\n    .major-section {\n        margin: 30px 0;\n    }\n    .major-title {\n        background: #7C2529;\n        color: white;\n        padding: 15px 20px;\n        font-size: 24px;\n        font-weight: 700;\n        border-radius: 5px;\n        margin-bottom: 20px;\n    }\n    .highlight-box {\n        background: #FFF9E6;\n        border: 2px solid #FDB913;\n        padding: 20px;\n        margin: 20px 0;\n        border-radius: 5px;\n    }\n    .highlight-box h3 {\n        color: #7C2529;\n        font-size: 18px;\n        margin-bottom: 15px;\n    }\n    .feature-list {\n        list-style: none;\n        padding: 0;\n    }\n    .feature-list li {\n        padding: 10px 0;\n        padding-left: 25px;\n        position: relative;\n        color: #555;\n    }\n    .feature-list li:before {\n        content: \"✓\";\n        position: absolute;\n        left: 0;\n        color: #FDB913;\n        font-weight: bold;\n        font-size: 18px;\n    }\n    .stats-grid {\n        display: table;\n        width: 100%;\n        margin: 20px 0;\n    }\n    .stat-item {\n        display: table-cell;\n        width: 50%;\n        padding: 15px;\n        text-align: center;\n        background: #f9f9f9;\n        border: 1px solid #e0e0e0;\n    }\n    .stat-number {\n        font-size: 24px;\n        font-weight: 700;\n        color: #7C2529;\n        display: block;\n    }\n    .stat-label {\n        font-size: 12px;\n        color: #666;\n        margin-top: 5px;\n    }\n    .cta-button {\n        display: inline-block;\n        background: #FDB913;\n        color: #7C2529;\n        padding: 15px 40px;\n        text-decoration: none;\n        font-weight: 700;\n        font-size: 16px;\n        border-radius: 30px;\n        margin: 20px 0;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n    .footer {\n        background: #f4f4f4;\n        padding: 30px 20px;\n        text-align: center;\n        border-top: 3px solid #7C2529;\n    }\n    .footer-text {\n        font-size: 12px;\n        color: #666;\n        margin: 10px 0;\n    }\n    .contact-info {\n        margin: 20px 0;\n        font-size: 13px;\n        color: #555;\n    }\n    .contact-info a {\n        color: #7C2529;\n        text-decoration: none;\n    }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\">\n        <div class=\"logo\">UA LITTLE ROCK</div>\n        <div class=\"logo-subtitle\">SCHOOL OF BUSINESS</div>\n    </div>\n\n    <div class=\"hero-banner\">\n        <h1>Welcome, {{1.`1`}}!</h1>\n        <p>Discover Your Future in Accounting</p>\n    </div>\n\n    <div class=\"content\">\n        <div class=\"greeting\">Thank you for your interest in UA Little Rock!</div>\n\n        <div class=\"intro\">\n            <h2>About UA Little Rock School of Business</h2>\n            <p>Welcome to the UA Little Rock School of Business, where we provide solid, affordable foundations for your future success. Our AACSB accredited programs (held by less than 5% of business schools worldwide) offer flexible learning options, real-world experiences, and a commitment to excellence.</p>\n        </div>\n\n        <div class=\"major-section\">\n            <div class=\"major-title\">Accounting Program</div>\n            \n            <p style=\"margin-bottom: 20px; color: #555; line-height: 1.8;\">Empower your future through accounting! This degree lays a robust foundation in financial systems, empowering you to decode data, make informed decisions, and significantly impact the global business arena.</p>\n\n            <div class=\"highlight-box\">\n                <h3>Why Choose Accounting at UALR?</h3>\n                <ul class=\"feature-list\">\n                    <li><strong>Expert Faculty:</strong> Learn from faculty who are all CPAs</li>\n                    <li><strong>CPA Preparation:</strong> Fulfills all requirements to sit for professional exams like the CPA</li>\n                    <li><strong>Industry Connections:</strong> Opportunities for internships with leading companies</li>\n                    <li><strong>Student Organizations:</strong> Beta Alpha Psi and Accounting Society</li>\n                    <li><strong>Career Opportunities:</strong> Stepping stone to various career paths</li>\n                    <li><strong>Global Impact:</strong> Work with emerging technologies and understand all parts of a business</li>\n                </ul>\n            </div>\n\n            <div class=\"stats-grid\">\n                <div class=\"stat-item\">\n                    <span class=\"stat-number\">$3,500</span>\n                    <div class=\"stat-label\">Per Semester Tuition</div>\n                </div>\n                <div class=\"stat-item\">\n                    <span class=\"stat-number\">$200,000</span>\n                    <div class=\"stat-label\">Annual Scholarships</div>\n                </div>\n            </div>\n\n            <div class=\"highlight-box\">\n                <h3>Career Opportunities</h3>\n                <p style=\"color: #555; line-height: 1.8;\">Accounting is a stepping stone to other career opportunities and provides a chance to understand all parts of a business. Our dynamic curriculum features specialized courses tailored to industry demands, preparing you for excellence and engagement in the accounting field.</p>\n            </div>\n        </div>\n\n        <div style=\"text-align: center; margin: 30px 0;\">\n            <a href=\"https://ualr.edu/business/academics/accounting/\" class=\"cta-button\" style=\"color: #7C2529 !important; text-decoration: none !important;\">Learn More About Accounting</a>\n        </div>\n\n        <div class=\"intro\">\n            <h2>Why UALR School of Business?</h2>\n            <ul class=\"feature-list\">\n                <li><strong>AACSB Accredited:</strong> Less than 5% of business schools worldwide hold this distinction</li>\n                <li><strong>Ranked #32:</strong> 2023 US News Online Business Program</li>\n                <li><strong>Affordable:</strong> Starting at just $3,500 per semester</li>\n                <li><strong>Flexible Learning:</strong> On-campus and online options available</li>\n                <li><strong>Real-World Experience:</strong> Career-defining internship opportunities through ASBTDC partnership</li>\n            </ul>\n        </div>\n    </div>\n\n    <div class=\"footer\">\n        <p class=\"footer-text\"><strong>Ready to take the next step?</strong></p>\n        \n        <div class=\"contact-info\">\n            UA Little Rock School of Business<br>\n            2801 S. University Ave, Little Rock, AR 72204<br>\n            <a href=\"mailto:business@ualr.edu\">business@ualr.edu</a> | (501) 569-3000<br>\n            <a href=\"https://ualr.edu/business/\" style=\"color: #7C2529;\">Visit our website</a>\n        </div>\n\n        <p class=\"footer-text\" style=\"margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;\">\n            Questions? Contact our admissions team - we're here to help!<br>\n            <a href=\"https://ualr.edu/admissions/\" style=\"color: #7C2529;\">Schedule a Campus Visit</a>\n        </p>\n\n        <p class=\"copyright\" style=\"font-size: 11px; color: #999; margin-top: 15px;\">\n            © 2025 UA Little Rock. All rights reserved.\n        </p>\n    </div>\n</div>\n</body>\n</html>",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "subject": "Welcome to UALR School of Business - Accounting Program Information",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": -300
+                                }
+                            }
+                        },
+                        {
+                            "id": 11,
+                            "module": "google-sheets:updateRow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 1234567
+                            },
+                            "mapper": {
+                                "from": "drive",
+                                "mode": "select",
+                                "values": {
+                                    "4": "Email Sent - {{now}}"
+                                },
+                                "sheetId": "Form Responses 1",
+                                "rowNumber": "{{1.`__ROW_NUMBER__`}}",
+                                "spreadsheetId": "/YOUR_SPREADSHEET_ID_HERE",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": -300
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 4,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": 1234567,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Business Analytics Major",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Business Analytics",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "cc": [],
+                                "to": [
+                                    "{{1.`2`}}"
+                                ],
+                                "bcc": [],
+                                "from": "",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Welcome to UALR School of Business - Business Analytics</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\n        line-height: 1.6;\n        color: #333333;\n        background-color: #f4f4f4;\n    }\n    .container {\n        max-width: 600px;\n        margin: 0 auto;\n        background: #ffffff;\n    }\n    .header {\n        background: #7C2529;\n        padding: 30px 20px;\n        text-align: center;\n    }\n    .logo {\n        font-size: 28px;\n        font-weight: 700;\n        color: #ffffff;\n        letter-spacing: 1px;\n    }\n    .logo-subtitle {\n        color: #FDB913;\n        font-size: 14px;\n        margin-top: 5px;\n        letter-spacing: 2px;\n    }\n    .hero-banner {\n        background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%);\n        padding: 40px 20px;\n        text-align: center;\n        color: white;\n        border-bottom: 5px solid #FDB913;\n    }\n    .hero-banner h1 {\n        font-size: 32px;\n        margin-bottom: 10px;\n    }\n    .hero-banner p {\n        font-size: 18px;\n        color: #FDB913;\n    }\n    .content {\n        padding: 40px 30px;\n    }\n    .greeting {\n        font-size: 20px;\n        color: #7C2529;\n        margin-bottom: 20px;\n        font-weight: 600;\n    }\n    .intro {\n        background: #f9f9f9;\n        padding: 20px;\n        border-left: 4px solid #7C2529;\n        margin-bottom: 30px;\n    }\n    .intro h2 {\n        color: #7C2529;\n        font-size: 20px;\n        margin-bottom: 10px;\n    }\n    .intro p {\n        color: #555;\n        line-height: 1.8;\n    }\n    .major-section {\n        margin: 30px 0;\n    }\n    .major-title {\n        background: #7C2529;\n        color: white;\n        padding: 15px 20px;\n        font-size: 24px;\n        font-weight: 700;\n        border-radius: 5px;\n        margin-bottom: 20px;\n    }\n    .highlight-box {\n        background: #FFF9E6;\n        border: 2px solid #FDB913;\n        padding: 20px;\n        margin: 20px 0;\n        border-radius: 5px;\n    }\n    .highlight-box h3 {\n        color: #7C2529;\n        font-size: 18px;\n        margin-bottom: 15px;\n    }\n    .feature-list {\n        list-style: none;\n        padding: 0;\n    }\n    .feature-list li {\n        padding: 10px 0;\n        padding-left: 25px;\n        position: relative;\n        color: #555;\n    }\n    .feature-list li:before {\n        content: \"✓\";\n        position: absolute;\n        left: 0;\n        color: #FDB913;\n        font-weight: bold;\n        font-size: 18px;\n    }\n    .stats-grid {\n        display: table;\n        width: 100%;\n        margin: 20px 0;\n    }\n    .stat-item {\n        display: table-cell;\n        width: 50%;\n        padding: 15px;\n        text-align: center;\n        background: #f9f9f9;\n        border: 1px solid #e0e0e0;\n    }\n    .stat-number {\n        font-size: 24px;\n        font-weight: 700;\n        color: #7C2529;\n        display: block;\n    }\n    .stat-label {\n        font-size: 12px;\n        color: #666;\n        margin-top: 5px;\n    }\n    .cta-button {\n        display: inline-block;\n        background: #FDB913;\n        color: #7C2529;\n        padding: 15px 40px;\n        text-decoration: none;\n        font-weight: 700;\n        font-size: 16px;\n        border-radius: 30px;\n        margin: 20px 0;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n    .footer {\n        background: #f4f4f4;\n        padding: 30px 20px;\n        text-align: center;\n        border-top: 3px solid #7C2529;\n    }\n    .footer-text {\n        font-size: 12px;\n        color: #666;\n        margin: 10px 0;\n    }\n    .contact-info {\n        margin: 20px 0;\n        font-size: 13px;\n        color: #555;\n    }\n    .contact-info a {\n        color: #7C2529;\n        text-decoration: none;\n    }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\">\n        <div class=\"logo\">UA LITTLE ROCK</div>\n        <div class=\"logo-subtitle\">SCHOOL OF BUSINESS</div>\n    </div>\n\n    <div class=\"hero-banner\">\n        <h1>Welcome, {{1.`1`}}!</h1>\n        <p>Discover Your Future in Business Analytics</p>\n    </div>\n\n    <div class=\"content\">\n        <div class=\"greeting\">Thank you for your interest in UA Little Rock!</div>\n\n        <div class=\"intro\">\n            <h2>About UA Little Rock School of Business</h2>\n            <p>Welcome to the UA Little Rock School of Business, where we provide solid, affordable foundations for your future success. Our AACSB accredited programs (held by less than 5% of business schools worldwide) offer flexible learning options, real-world experiences, and a commitment to excellence.</p>\n        </div>\n\n        <div class=\"major-section\">\n            <div class=\"major-title\">Business Analytics Program</div>\n            \n            <p style=\"margin-bottom: 20px; color: #555; line-height: 1.8;\">A business analytics degree equips you with cutting-edge tools and expertise to extract data-driven insights, driving strategic decisions and sparking innovation across various industries.</p>\n\n            <div class=\"highlight-box\">\n                <h3>Why Choose Business Analytics at UALR?</h3>\n                <ul class=\"feature-list\">\n                    <li><strong>Practical Skills:</strong> Project-based learning and practical data analytics and technology skills</li>\n                    <li><strong>Versatile:</strong> Data analytics skills useful in many industries</li>\n                    <li><strong>Flexible Delivery:</strong> Online or in person options</li>\n                    <li><strong>Career Growth:</strong> Employment prospects projected to grow 35% from 2022 to 2032 (US BLS)</li>\n                    <li><strong>Expert Faculty:</strong> Faculty with industry experience</li>\n                    <li><strong>Hands-on Learning:</strong> Engagement through active student organization</li>\n                </ul>\n            </div>\n\n            <div class=\"stats-grid\">\n                <div class=\"stat-item\">\n                    <span class=\"stat-number\">35%</span>\n                    <div class=\"stat-label\">Job Growth 2022-2032</div>\n                </div>\n                <div class=\"stat-item\">\n                    <span class=\"stat-number\">$58K-$174K</span>\n                    <div class=\"stat-label\">Annual Salary Range</div>\n                </div>\n            </div>\n\n            <div class=\"highlight-box\">\n                <h3>Career Opportunities</h3>\n                <p style=\"color: #555; line-height: 1.8;\">Develop skills to help businesses make data-driven decisions. Annual salaries range from $58,000 to $174,000 (US BLS). Our industry-driven curriculum prepares you for success in this high-growth field.</p>\n            </div>\n        </div>\n\n        <div style=\"text-align: center; margin: 30px 0;\">\n            <a href=\"https://ualr.edu/business/academics/business-analytics/\" class=\"cta-button\" style=\"color: #7C2529 !important; text-decoration: none !important;\">Learn More About Business Analytics</a>\n        </div>\n\n        <div class=\"intro\">\n            <h2>Why UALR School of Business?</h2>\n            <ul class=\"feature-list\">\n                <li><strong>AACSB Accredited:</strong> Less than 5% of business schools worldwide hold this distinction</li>\n                <li><strong>Ranked #32:</strong> 2023 US News Online Business Program</li>\n                <li><strong>Affordable:</strong> Starting at just $3,500 per semester</li>\n                <li><strong>Flexible Learning:</strong> On-campus and online options available</li>\n                <li><strong>Real-World Experience:</strong> Career-defining internship opportunities through ASBTDC partnership</li>\n            </ul>\n        </div>\n    </div>\n\n    <div class=\"footer\">\n        <p class=\"footer-text\"><strong>Ready to take the next step?</strong></p>\n        \n        <div class=\"contact-info\">\n            UA Little Rock School of Business<br>\n            2801 S. University Ave, Little Rock, AR 72204<br>\n            <a href=\"mailto:business@ualr.edu\">business@ualr.edu</a> | (501) 569-3000<br>\n            <a href=\"https://ualr.edu/business/\" style=\"color: #7C2529;\">Visit our website</a>\n        </div>\n\n        <p class=\"footer-text\" style=\"margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;\">\n            Questions? Contact our admissions team - we're here to help!<br>\n            <a href=\"https://ualr.edu/admissions/\" style=\"color: #7C2529;\">Schedule a Campus Visit</a>\n        </p>\n\n        <p class=\"copyright\" style=\"font-size: 11px; color: #999; margin-top: 15px;\">\n            © 2025 UA Little Rock. All rights reserved.\n        </p>\n    </div>\n</div>\n</body>\n</html>",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "subject": "Welcome to UALR School of Business - Business Analytics Program Information",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": -150
+                                }
+                            }
+                        },
+                        {
+                            "id": 12,
+                            "module": "google-sheets:updateRow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 1234567
+                            },
+                            "mapper": {
+                                "from": "drive",
+                                "mode": "select",
+                                "values": {
+                                    "4": "Email Sent - {{now}}"
+                                },
+                                "sheetId": "Form Responses 1",
+                                "rowNumber": "{{1.`__ROW_NUMBER__`}}",
+                                "spreadsheetId": "/YOUR_SPREADSHEET_ID_HERE",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": -150
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "sequential": false,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

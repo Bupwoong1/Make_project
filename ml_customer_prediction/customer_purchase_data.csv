@@ -1,0 +1,34 @@
+customer_id,customer_email,customer_name,purchase_date,product_category,purchase_amount,days_since_last_purchase,total_purchases,avg_purchase_amount,preferred_category
+C001,john.smith@email.com,John Smith,2025-10-15,Electronics,450.00,12,8,387.50,Electronics
+C002,sarah.jones@email.com,Sarah Jones,2025-10-20,Fashion,120.00,7,15,95.30,Fashion
+C003,mike.brown@email.com,Mike Brown,2025-09-28,Home & Garden,280.00,29,5,310.00,Home & Garden
+C004,emily.davis@email.com,Emily Davis,2025-10-22,Beauty,85.00,5,22,78.40,Beauty
+C005,david.wilson@email.com,David Wilson,2025-09-15,Electronics,620.00,42,12,485.00,Electronics
+C006,lisa.moore@email.com,Lisa Moore,2025-10-18,Fashion,195.00,9,18,142.50,Fashion
+C007,james.taylor@email.com,James Taylor,2025-08-30,Sports,340.00,58,7,295.00,Sports
+C008,anna.white@email.com,Anna White,2025-10-25,Beauty,110.00,2,25,92.80,Beauty
+C009,robert.martin@email.com,Robert Martin,2025-10-10,Electronics,890.00,17,9,612.00,Electronics
+C010,jennifer.lee@email.com,Jennifer Lee,2025-10-23,Fashion,155.00,4,20,128.00,Fashion
+C011,william.harris@email.com,William Harris,2025-09-05,Home & Garden,425.00,52,6,368.00,Home & Garden
+C012,mary.clark@email.com,Mary Clark,2025-10-21,Beauty,95.00,6,28,85.20,Beauty
+C013,charles.lewis@email.com,Charles Lewis,2025-10-12,Electronics,520.00,15,11,445.00,Electronics
+C014,patricia.walker@email.com,Patricia Walker,2025-10-19,Fashion,210.00,8,16,165.00,Fashion
+C015,thomas.hall@email.com,Thomas Hall,2025-09-20,Sports,380.00,37,8,325.00,Sports
+C016,linda.allen@email.com,Linda Allen,2025-10-24,Beauty,125.00,3,30,95.00,Beauty
+C017,richard.young@email.com,Richard Young,2025-08-25,Electronics,750.00,63,10,580.00,Electronics
+C018,barbara.king@email.com,Barbara King,2025-10-17,Fashion,175.00,10,19,138.00,Fashion
+C019,joseph.wright@email.com,Joseph Wright,2025-10-26,Home & Garden,315.00,1,7,295.00,Home & Garden
+C020,susan.scott@email.com,Susan Scott,2025-10-20,Beauty,105.00,7,24,88.50,Beauty
+C021,daniel.green@email.com,Daniel Green,2025-09-10,Electronics,680.00,47,13,525.00,Electronics
+C022,karen.adams@email.com,Karen Adams,2025-10-22,Fashion,145.00,5,17,152.00,Fashion
+C023,matthew.baker@email.com,Matthew Baker,2025-08-15,Sports,290.00,72,5,315.00,Sports
+C024,nancy.nelson@email.com,Nancy Nelson,2025-10-25,Beauty,115.00,2,26,90.00,Beauty
+C025,anthony.carter@email.com,Anthony Carter,2025-10-08,Electronics,495.00,19,14,465.00,Electronics
+C026,betty.mitchell@email.com,Betty Mitchell,2025-10-21,Fashion,185.00,6,21,145.00,Fashion
+C027,mark.perez@email.com,Mark Perez,2025-09-25,Home & Garden,360.00,32,9,340.00,Home & Garden
+C028,sandra.roberts@email.com,Sandra Roberts,2025-10-23,Beauty,98.00,4,27,87.00,Beauty
+C029,paul.turner@email.com,Paul Turner,2025-10-14,Electronics,825.00,13,15,595.00,Electronics
+C030,ashley.phillips@email.com,Ashley Phillips,2025-10-19,Fashion,165.00,8,23,135.00,Fashion
+C031,michael.chen@email.com,Michael Chen,2025-10-26,Electronics,675.00,1,16,520.00,Electronics
+C032,jessica.martinez@email.com,Jessica Martinez,2025-10-24,Beauty,95.00,3,19,88.00,Beauty
+C033,david.kim@email.com,David Kim,2025-10-12,Sports,420.00,15,11,365.00,Sports

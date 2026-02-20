@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exclusive Personalized Offer</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        background-color: #f5f7fa;
+    }
+    .email-wrapper {
+        width: 100%;
+        background-color: #f5f7fa;
+        padding: 40px 20px;
+    }
+    .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .header-banner {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 40px 30px;
+        text-align: center;
+        color: #ffffff;
+    }
+    .header-banner h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+    }
+    .header-banner p {
+        font-size: 16px;
+        opacity: 0.95;
+        font-weight: 300;
+    }
+    .content-section {
+        padding: 40px 30px;
+    }
+    .greeting {
+        font-size: 18px;
+        color: #2d3748;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    .intro-text {
+        font-size: 15px;
+        color: #4a5568;
+        margin-bottom: 30px;
+        line-height: 1.7;
+    }
+    .insight-card {
+        background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+        border-left: 4px solid #667eea;
+        padding: 25px;
+        border-radius: 8px;
+        margin: 30px 0;
+    }
+    .insight-card h3 {
+        font-size: 16px;
+        color: #2d3748;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .insight-card .stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .insight-card .stat:last-child {
+        border-bottom: none;
+    }
+    .insight-card .stat-label {
+        font-size: 14px;
+        color: #718096;
+    }
+    .insight-card .stat-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2d3748;
+    }
+    .confidence-badge {
+        display: inline-flex;
+        align-items: center;
+        background: #48bb78;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .products-section {
+        margin: 35px 0;
+    }
+    .products-section h3 {
+        font-size: 18px;
+        color: #2d3748;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    .products-section .category-tag {
+        display: inline-block;
+        background: #edf2f7;
+        color: #4a5568;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+    .product-grid {
+        display: table;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .product-item {
+        display: table;
+        width: 100%;
+        background: #f8fafc;
+        padding: 16px 18px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s;
+    }
+    .product-item:hover {
+        border-color: #667eea;
+        background: #f7fafc;
+    }
+    .product-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: #667eea;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .product-name {
+        font-size: 15px;
+        color: #2d3748;
+        font-weight: 500;
+    }
+    .cta-section {
+        text-align: center;
+        margin: 40px 0 30px 0;
+    }
+    .cta-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 16px 40px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        transition: all 0.3s;
+    }
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+    }
+    .discount-badge {
+        display: inline-block;
+        background: #f56565;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 12px;
+        letter-spacing: 0.5px;
+    }
+    .divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+        margin: 30px 0;
+    }
+    .footer {
+        background: #2d3748;
+        padding: 30px;
+        text-align: center;
+    }
+    .footer-content {
+        font-size: 13px;
+        color: #a0aec0;
+        line-height: 1.8;
+    }
+    .footer-content strong {
+        color: #cbd5e0;
+    }
+    .footer-links {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #4a5568;
+    }
+    .footer-link {
+        color: #a0aec0;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 12px;
+    }
+    .footer-link:hover {
+        color: #cbd5e0;
+    }
+    .ml-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255,255,255,0.1);
+        padding: 8px 16px;
+        border-radius: 6px;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #e2e8f0;
+    }
+    .social-section {
+        text-align: center;
+        padding: 25px 0 10px 0;
+    }
+    .social-section p {
+        font-size: 13px;
+        color: #a0aec0;
+        margin-bottom: 15px;
+    }
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    .social-icon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    .social-icon:hover {
+        transform: translateY(-3px);
+        opacity: 0.8;
+    }
+    .social-icon img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    @media only screen and (max-width: 600px) {
+        .email-wrapper { padding: 20px 10px; }
+        .content-section { padding: 30px 20px; }
+        .header-banner { padding: 30px 20px; }
+        .header-banner h1 { font-size: 24px; }
+        .cta-button { padding: 14px 30px; font-size: 15px; }
+    }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+    <div class="email-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <h1>Exclusive Offer Inside</h1>
+            <p>Personalized just for you, {{3.customer_name}}</p>
+            <div class="ml-badge">
+                <span>🤖</span>
+                <span>AI-Powered Recommendation</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <div class="greeting">
+                Hello {{3.customer_name}},
+            </div>
+
+            <div class="intro-text">
+                We hope you're doing well! Our advanced machine learning system has analyzed your shopping patterns and identified the perfect time to reach out with products you'll love.
+            </div>
+
+            <!-- AI Insights Card -->
+            <div class="insight-card">
+                <h3>
+                    <span>📊</span>
+                    <span>Your Personalized Shopping Insights</span>
+                </h3>
+
+                <div class="stat">
+                    <span class="stat-label">Next Purchase Window</span>
+                    <span class="stat-value">{{3.predicted_days_until_next_purchase}} days</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-label">Estimated Date</span>
+                    <span class="stat-value">{{3.predicted_purchase_date}}</span>
+                </div>
+
+                <div class="stat">
+                    <span class="stat-label">Prediction Confidence</span>
+                    <span class="confidence-badge">High Confidence</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Products Section -->
+            <div class="products-section">
+                <h3>Curated Recommendations for You</h3>
+                <div class="category-tag">{{3.preferred_category}}</div>
+
+                <p style="font-size: 14px; color: #718096; margin-bottom: 20px;">
+                    Based on your preference for <strong>{{3.preferred_category}}</strong>, we've hand-picked these items:
+                </p>
+
+                <div class="product-grid">
+                    {{#each 3.recommended_products}}
+                    <div class="product-item">
+                        <span class="product-icon">✓</span>
+                        <span class="product-name">{{this}}</span>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <a href="https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ml_email&utm_medium=email&utm_campaign=personalized_offer" class="cta-button">
+                    Shop Your Recommendations
+                </a>
+                <div class="discount-badge">
+                    EXCLUSIVE: 20% OFF
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <p style="font-size: 13px; color: #a0aec0;">
+                    Use code <strong style="color: #667eea; font-family: 'Courier New', monospace;">ML20OFF</strong> at checkout
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <!-- Social Media Section -->
+            <div class="social-section">
+                <p>Connect with us on social media</p>
+                <div class="social-icons">
+                    <a href="https://facebook.com/yourstore" class="social-icon" title="Facebook">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                    </a>
+                    <a href="https://twitter.com/yourstore" class="social-icon" title="Twitter">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                    </a>
+                    <a href="https://instagram.com/yourstore" class="social-icon" title="Instagram">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                    </a>
+                    <a href="https://linkedin.com/company/yourstore" class="social-icon" title="LinkedIn">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://youtube.com/@yourstore" class="social-icon" title="YouTube">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" alt="YouTube">
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-content">
+                <p>
+                    <strong>Why did you receive this email?</strong><br>
+                    This email was intelligently timed using machine learning analysis of your shopping behavior. We aim to reach you at the perfect moment with relevant offers.
+                </p>
+                <p style="margin-top: 15px; font-size: 12px;">
+                    Customer ID: <span style="font-family: 'Courier New', monospace;">{{3.customer_id}}</span>
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#" class="footer-link">Unsubscribe</a>
+                <a href="#" class="footer-link">Update Preferences</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 11px; color: #718096;">
+                © 2025 Your Store. All rights reserved.
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

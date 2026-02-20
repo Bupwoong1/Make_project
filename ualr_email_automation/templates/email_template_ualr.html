@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalized Shopping Recommendations</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        background-color: #f4f4f4;
+    }
+    .email-wrapper {
+        width: 100%;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+    .email-container {
+        max-width: 650px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    /* Logo Header */
+    .logo-header {
+        background: #7C2529;
+        padding: 30px 40px;
+        text-align: center;
+    }
+    .logo-text {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin: 0;
+    }
+    .logo-subtext {
+        font-size: 14px;
+        color: #cccccc;
+        margin-top: 5px;
+        letter-spacing: 1px;
+    }
+    /* Main Header */
+    .header-banner {
+        background: #f8f9fa;
+        padding: 40px 40px;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .header-banner h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #2c2c2c;
+    }
+    .header-banner p {
+        font-size: 16px;
+        color: #666666;
+    }
+    .ai-badge {
+        display: inline-block;
+        background: #7C2529;
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 4px;
+        margin-top: 15px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    /* Content */
+    .content-section {
+        padding: 35px 40px;
+    }
+    .greeting {
+        font-size: 18px;
+        color: #2c2c2c;
+        margin-bottom: 18px;
+        font-weight: 600;
+    }
+    .intro-text {
+        font-size: 15px;
+        color: #555555;
+        margin-bottom: 25px;
+        line-height: 1.7;
+    }
+    /* Insight Card */
+    .insight-card {
+        background: #fafafa;
+        border: 2px solid #7C2529;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0;
+    }
+    .insight-card h3 {
+        font-size: 16px;
+        color: #7C2529;
+        margin-bottom: 18px;
+        font-weight: 700;
+    }
+    .stat-row {
+        display: table;
+        width: 100%;
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .stat-row:last-child {
+        border-bottom: none;
+    }
+    .stat-label {
+        display: table-cell;
+        font-size: 14px;
+        color: #666666;
+        width: 60%;
+    }
+    .stat-value {
+        display: table-cell;
+        font-size: 15px;
+        font-weight: 600;
+        color: #2c2c2c;
+        text-align: right;
+    }
+    .confidence-badge {
+        display: inline-block;
+        background: #28a745;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    /* Products */
+    .products-section {
+        margin: 30px 0;
+    }
+    .products-section h3 {
+        font-size: 18px;
+        color: #2c2c2c;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .category-tag {
+        display: inline-block;
+        background: #7C2529;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+    .product-list {
+        margin-top: 15px;
+    }
+    .product-item {
+        background: #f9f9f9;
+        padding: 14px 16px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid #7C2529;
+        font-size: 15px;
+        color: #333333;
+    }
+    .product-item:before {
+        content: "✓ ";
+        color: #7C2529;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+    /* CTA */
+    .cta-section {
+        text-align: center;
+        margin: 35px 0 25px 0;
+    }
+    .cta-button {
+        display: inline-block;
+        background: #7C2529;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 15px 35px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+    .cta-button:hover {
+        background: #5a1c1f;
+    }
+    .discount-badge {
+        display: inline-block;
+        background: #dc3545;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 10px;
+    }
+    .coupon-code {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #666666;
+    }
+    .coupon-code strong {
+        color: #7C2529;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+    }
+    /* Footer */
+    .footer {
+        background: #2c2c2c;
+        padding: 30px 40px;
+        color: #cccccc;
+    }
+    .social-section {
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #444444;
+    }
+    .social-section p {
+        font-size: 13px;
+        margin-bottom: 12px;
+        color: #aaaaaa;
+    }
+    .social-icons {
+        text-align: center;
+    }
+    .social-icon {
+        display: inline-block;
+        margin: 0 8px;
+        text-decoration: none;
+    }
+    .social-icon img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        transition: opacity 0.3s;
+    }
+    .social-icon:hover img {
+        opacity: 0.8;
+    }
+    .footer-content {
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .footer-content strong {
+        color: #ffffff;
+    }
+    .footer-links {
+        text-align: center;
+        padding: 15px 0;
+        border-top: 1px solid #444444;
+    }
+    .footer-link {
+        color: #aaaaaa;
+        text-decoration: none;
+        margin: 0 12px;
+        font-size: 12px;
+    }
+    .footer-link:hover {
+        color: #ffffff;
+    }
+    .copyright {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 11px;
+        color: #888888;
+    }
+    @media only screen and (max-width: 600px) {
+        .email-wrapper { padding: 10px; }
+        .logo-header { padding: 20px; }
+        .header-banner { padding: 25px 20px; }
+        .content-section { padding: 25px 20px; }
+        .header-banner h1 { font-size: 22px; }
+        .cta-button { padding: 12px 28px; font-size: 15px; }
+        .footer { padding: 25px 20px; }
+    }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+    <div class="email-container">
+        <!-- Logo Header -->
+        <div class="logo-header">
+            <h1 class="logo-text">UA LITTLE ROCK</h1>
+            <p class="logo-subtext">CUSTOMER INTELLIGENCE SYSTEM</p>
+        </div>
+
+        <!-- Main Header -->
+        <div class="header-banner">
+            <h1>Predictive Shopping Intelligence Report</h1>
+            <p>Advanced Analytics for {{3.customer_name}}</p>
+            <div class="ai-badge">
+                MACHINE LEARNING INSIGHTS
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-section">
+            <div class="greeting">
+                Dear {{3.customer_name}},
+            </div>
+
+            <div class="intro-text">
+                Our advanced predictive analytics platform has completed a comprehensive analysis of your purchase patterns. Based on sophisticated machine learning algorithms, we have identified an optimal engagement window and curated product recommendations aligned with your preferences.
+            </div>
+
+            <!-- Insights -->
+            <div class="insight-card">
+                <h3>📊 Predictive Analytics Summary</h3>
+
+                <div class="stat-row">
+                    <span class="stat-label">Projected Purchase Window</span>
+                    <span class="stat-value">{{3.predicted_days_until_next_purchase}} Days</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Target Engagement Date</span>
+                    <span class="stat-value">{{3.predicted_purchase_date}}</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Model Confidence Level</span>
+                    <span class="stat-value">
+                        <span class="confidence-badge">High Accuracy</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <div class="products-section">
+                <h3>Curated Product Recommendations</h3>
+                <div class="category-tag">{{3.preferred_category}}</div>
+                <p style="font-size: 14px; color: #666666; margin-bottom: 12px;">
+                    Based on your demonstrated preference for <strong>{{3.preferred_category}}</strong> category, our recommendation engine has selected the following items:
+                </p>
+
+                <div class="product-list">
+                    {{#each 3.recommended_products}}
+                    <div class="product-item">{{this}}</div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <a href="https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ml_email&utm_medium=email&utm_campaign=ualr_personalized" class="cta-button">
+                    View Recommendations
+                </a>
+                <div class="discount-badge">
+                    EXCLUSIVE OFFER: 20% DISCOUNT
+                </div>
+                <div class="coupon-code">
+                    Promotional Code: <strong>UALR20</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <!-- Social Media -->
+            <div class="social-section">
+                <p>Connect with us</p>
+                <div class="social-icons">
+                    <a href="https://facebook.com/yourstore" class="social-icon" title="Facebook">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                    </a>
+                    <a href="https://twitter.com/yourstore" class="social-icon" title="Twitter">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                    </a>
+                    <a href="https://instagram.com/yourstore" class="social-icon" title="Instagram">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                    </a>
+                    <a href="https://linkedin.com/company/yourstore" class="social-icon" title="LinkedIn">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-content">
+                <p>
+                    <strong>Intelligent Engagement</strong><br>
+                    This communication was generated by our predictive analytics system and strategically timed based on behavioral analysis to maximize relevance and value.
+                </p>
+                <p style="margin-top: 10px; font-size: 12px;">
+                    Reference ID: <span style="font-family: 'Courier New', monospace;">{{3.customer_id}}</span>
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#" class="footer-link">Unsubscribe</a>
+                <a href="#" class="footer-link">Preferences</a>
+                <a href="#" class="footer-link">Privacy</a>
+            </div>
+
+            <div class="copyright">
+                © 2025 UA Little Rock. All rights reserved.
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

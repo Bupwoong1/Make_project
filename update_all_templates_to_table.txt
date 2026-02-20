@@ -1,0 +1,4 @@
+나머지 4개 템플릿(Fashion, Beauty, Sports, Home & Garden)도 동일하게 table 기반으로 수정해야 합니다.
+
+Electronics 템플릿이 완료되었으니, 이것을 테스트해보시고 잘 작동하면 말씀해주세요.
+그럼 나머지 4개도 한 번에 수정해드리겠습니다!

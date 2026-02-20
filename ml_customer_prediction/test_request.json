@@ -1,0 +1,9 @@
+{
+  "customer_id": "C001",
+  "customer_email": "john.smith@email.com",
+  "customer_name": "John Smith",
+  "days_since_last_purchase": 15,
+  "total_purchases": 10,
+  "avg_purchase_amount": 250.00,
+  "preferred_category": "Electronics"
+}

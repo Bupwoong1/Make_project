@@ -1,0 +1,1693 @@
+{
+    "name": "1Automating marketing email delivery after a Google Forms survey (copy)",
+    "flow": [
+        {
+            "id": 1,
+            "module": "google-sheets:filterRows",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 5948005
+            },
+            "mapper": {
+                "from": "share",
+                "filter": [
+                    [
+                        {
+                            "a": "G",
+                            "o": "exist"
+                        }
+                    ]
+                ],
+                "sheetId": "Form Responses 1",
+                "sortOrder": "asc",
+                "spreadsheetId": "1tDNVLtrp0sQr7MVPyoB_5D3kIRXqjF_15rYG8H5oiOE",
+                "tableFirstRow": "A1:CZ1",
+                "includesHeaders": true,
+                "valueRenderOption": "FORMATTED_VALUE",
+                "dateTimeRenderOption": "FORMATTED_STRING"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 300
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "Select from all"
+                        },
+                        "filter": {
+                            "label": []
+                        },
+                        "orderBy": {
+                            "mode": "chose"
+                        },
+                        "sheetId": {
+                            "mode": "chose",
+                            "label": "Form Responses 1"
+                        },
+                        "sortOrder": {
+                            "mode": "chose",
+                            "label": "Ascending"
+                        },
+                        "tableFirstRow": {
+                            "label": "A-CZ"
+                        },
+                        "includesHeaders": {
+                            "mode": "chose",
+                            "label": "Yes"
+                        },
+                        "valueRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted value"
+                        },
+                        "dateTimeRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted string"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "valueRenderOption",
+                        "type": "select",
+                        "label": "Value render option",
+                        "validate": {
+                            "enum": [
+                                "FORMATTED_VALUE",
+                                "UNFORMATTED_VALUE",
+                                "FORMULA"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "dateTimeRenderOption",
+                        "type": "select",
+                        "label": "Date and time render option",
+                        "validate": {
+                            "enum": [
+                                "SERIAL_NUMBER",
+                                "FORMATTED_STRING"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit"
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "text",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "tableFirstRow",
+                        "type": "select",
+                        "label": "Column range",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "A1:Z1",
+                                "A1:BZ1",
+                                "A1:CZ1",
+                                "A1:DZ1",
+                                "A1:MZ1",
+                                "A1:ZZ1",
+                                "A1:AZZ1",
+                                "A1:BZZ1",
+                                "A1:CZZ1",
+                                "A1:DZZ1",
+                                "A1:MZZ1",
+                                "A1:ZZZ1"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "type": "filter",
+                        "label": "Filter",
+                        "options": "rpc://google-sheets/2/rpcGetFilterKeys?includesHeaders=true"
+                    },
+                    {
+                        "name": "orderBy",
+                        "type": "select",
+                        "label": "Order by"
+                    },
+                    {
+                        "name": "sortOrder",
+                        "type": "select",
+                        "label": "Sort order",
+                        "validate": {
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "valueRenderOption",
+                        "type": "select",
+                        "label": "Value render option",
+                        "validate": {
+                            "enum": [
+                                "FORMATTED_VALUE",
+                                "UNFORMATTED_VALUE",
+                                "FORMULA"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "dateTimeRenderOption",
+                        "type": "select",
+                        "label": "Date and time render option",
+                        "validate": {
+                            "enum": [
+                                "SERIAL_NUMBER",
+                                "FORMATTED_STRING"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit"
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "text",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "tableFirstRow",
+                        "type": "select",
+                        "label": "Column range",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "A1:Z1",
+                                "A1:BZ1",
+                                "A1:CZ1",
+                                "A1:DZ1",
+                                "A1:MZ1",
+                                "A1:ZZ1",
+                                "A1:AZZ1",
+                                "A1:BZZ1",
+                                "A1:CZZ1",
+                                "A1:DZZ1",
+                                "A1:MZZ1",
+                                "A1:ZZZ1"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "type": "filter",
+                        "label": "Filter",
+                        "options": "rpc://google-sheets/2/rpcGetFilterKeys?includesHeaders=true"
+                    },
+                    {
+                        "name": "orderBy",
+                        "type": "select",
+                        "label": "Order by"
+                    },
+                    {
+                        "name": "sortOrder",
+                        "type": "select",
+                        "label": "Sort order",
+                        "validate": {
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "__ROW_NUMBER__",
+                        "type": "number",
+                        "label": "Row number"
+                    },
+                    {
+                        "name": "__SPREADSHEET_ID__",
+                        "type": "text",
+                        "label": "Spreadsheet ID"
+                    },
+                    {
+                        "name": "__SHEET__",
+                        "type": "text",
+                        "label": "Sheet"
+                    },
+                    {
+                        "name": "0",
+                        "type": "text",
+                        "label": "Timestamp (A)"
+                    },
+                    {
+                        "name": "1",
+                        "type": "text",
+                        "label": "What is your skin type? (B)"
+                    },
+                    {
+                        "name": "2",
+                        "type": "text",
+                        "label": "What are your top skin concerns? (Select all that apply) (C)"
+                    },
+                    {
+                        "name": "3",
+                        "type": "text",
+                        "label": "Which product do you use most often in your skincare routine? (D)"
+                    },
+                    {
+                        "name": "4",
+                        "type": "text",
+                        "label": "Which skincare ingredient do you prefer? (E)"
+                    },
+                    {
+                        "name": "5",
+                        "type": "text",
+                        "label": "What is the most important factor when you purchase skincare products? (F)"
+                    },
+                    {
+                        "name": "6",
+                        "type": "text",
+                        "label": "Enter your email if you’d like personalized recommendations and special offers. (G)"
+                    },
+                    {
+                        "name": "7",
+                        "type": "text",
+                        "label": "(H)"
+                    },
+                    {
+                        "name": "8",
+                        "type": "text",
+                        "label": "(I)"
+                    },
+                    {
+                        "name": "9",
+                        "type": "text",
+                        "label": "(J)"
+                    },
+                    {
+                        "name": "10",
+                        "type": "text",
+                        "label": "(K)"
+                    },
+                    {
+                        "name": "11",
+                        "type": "text",
+                        "label": "(L)"
+                    },
+                    {
+                        "name": "12",
+                        "type": "text",
+                        "label": "(M)"
+                    },
+                    {
+                        "name": "13",
+                        "type": "text",
+                        "label": "(N)"
+                    },
+                    {
+                        "name": "14",
+                        "type": "text",
+                        "label": "(O)"
+                    },
+                    {
+                        "name": "15",
+                        "type": "text",
+                        "label": "(P)"
+                    },
+                    {
+                        "name": "16",
+                        "type": "text",
+                        "label": "(Q)"
+                    },
+                    {
+                        "name": "17",
+                        "type": "text",
+                        "label": "(R)"
+                    },
+                    {
+                        "name": "18",
+                        "type": "text",
+                        "label": "(S)"
+                    },
+                    {
+                        "name": "19",
+                        "type": "text",
+                        "label": "(T)"
+                    },
+                    {
+                        "name": "20",
+                        "type": "text",
+                        "label": "(U)"
+                    },
+                    {
+                        "name": "21",
+                        "type": "text",
+                        "label": "(V)"
+                    },
+                    {
+                        "name": "22",
+                        "type": "text",
+                        "label": "(W)"
+                    },
+                    {
+                        "name": "23",
+                        "type": "text",
+                        "label": "(X)"
+                    },
+                    {
+                        "name": "24",
+                        "type": "text",
+                        "label": "(Y)"
+                    },
+                    {
+                        "name": "25",
+                        "type": "text",
+                        "label": "(Z)"
+                    },
+                    {
+                        "name": "26",
+                        "type": "text",
+                        "label": "(AA)"
+                    },
+                    {
+                        "name": "27",
+                        "type": "text",
+                        "label": "(AB)"
+                    },
+                    {
+                        "name": "28",
+                        "type": "text",
+                        "label": "(AC)"
+                    },
+                    {
+                        "name": "29",
+                        "type": "text",
+                        "label": "(AD)"
+                    },
+                    {
+                        "name": "30",
+                        "type": "text",
+                        "label": "(AE)"
+                    },
+                    {
+                        "name": "31",
+                        "type": "text",
+                        "label": "(AF)"
+                    },
+                    {
+                        "name": "32",
+                        "type": "text",
+                        "label": "(AG)"
+                    },
+                    {
+                        "name": "33",
+                        "type": "text",
+                        "label": "(AH)"
+                    },
+                    {
+                        "name": "34",
+                        "type": "text",
+                        "label": "(AI)"
+                    },
+                    {
+                        "name": "35",
+                        "type": "text",
+                        "label": "(AJ)"
+                    },
+                    {
+                        "name": "36",
+                        "type": "text",
+                        "label": "(AK)"
+                    },
+                    {
+                        "name": "37",
+                        "type": "text",
+                        "label": "(AL)"
+                    },
+                    {
+                        "name": "38",
+                        "type": "text",
+                        "label": "(AM)"
+                    },
+                    {
+                        "name": "39",
+                        "type": "text",
+                        "label": "(AN)"
+                    },
+                    {
+                        "name": "40",
+                        "type": "text",
+                        "label": "(AO)"
+                    },
+                    {
+                        "name": "41",
+                        "type": "text",
+                        "label": "(AP)"
+                    },
+                    {
+                        "name": "42",
+                        "type": "text",
+                        "label": "(AQ)"
+                    },
+                    {
+                        "name": "43",
+                        "type": "text",
+                        "label": "(AR)"
+                    },
+                    {
+                        "name": "44",
+                        "type": "text",
+                        "label": "(AS)"
+                    },
+                    {
+                        "name": "45",
+                        "type": "text",
+                        "label": "(AT)"
+                    },
+                    {
+                        "name": "46",
+                        "type": "text",
+                        "label": "(AU)"
+                    },
+                    {
+                        "name": "47",
+                        "type": "text",
+                        "label": "(AV)"
+                    },
+                    {
+                        "name": "48",
+                        "type": "text",
+                        "label": "(AW)"
+                    },
+                    {
+                        "name": "49",
+                        "type": "text",
+                        "label": "(AX)"
+                    },
+                    {
+                        "name": "50",
+                        "type": "text",
+                        "label": "(AY)"
+                    },
+                    {
+                        "name": "51",
+                        "type": "text",
+                        "label": "(AZ)"
+                    },
+                    {
+                        "name": "52",
+                        "type": "text",
+                        "label": "(BA)"
+                    },
+                    {
+                        "name": "53",
+                        "type": "text",
+                        "label": "(BB)"
+                    },
+                    {
+                        "name": "54",
+                        "type": "text",
+                        "label": "(BC)"
+                    },
+                    {
+                        "name": "55",
+                        "type": "text",
+                        "label": "(BD)"
+                    },
+                    {
+                        "name": "56",
+                        "type": "text",
+                        "label": "(BE)"
+                    },
+                    {
+                        "name": "57",
+                        "type": "text",
+                        "label": "(BF)"
+                    },
+                    {
+                        "name": "58",
+                        "type": "text",
+                        "label": "(BG)"
+                    },
+                    {
+                        "name": "59",
+                        "type": "text",
+                        "label": "(BH)"
+                    },
+                    {
+                        "name": "60",
+                        "type": "text",
+                        "label": "(BI)"
+                    },
+                    {
+                        "name": "61",
+                        "type": "text",
+                        "label": "(BJ)"
+                    },
+                    {
+                        "name": "62",
+                        "type": "text",
+                        "label": "(BK)"
+                    },
+                    {
+                        "name": "63",
+                        "type": "text",
+                        "label": "(BL)"
+                    },
+                    {
+                        "name": "64",
+                        "type": "text",
+                        "label": "(BM)"
+                    },
+                    {
+                        "name": "65",
+                        "type": "text",
+                        "label": "(BN)"
+                    },
+                    {
+                        "name": "66",
+                        "type": "text",
+                        "label": "(BO)"
+                    },
+                    {
+                        "name": "67",
+                        "type": "text",
+                        "label": "(BP)"
+                    },
+                    {
+                        "name": "68",
+                        "type": "text",
+                        "label": "(BQ)"
+                    },
+                    {
+                        "name": "69",
+                        "type": "text",
+                        "label": "(BR)"
+                    },
+                    {
+                        "name": "70",
+                        "type": "text",
+                        "label": "(BS)"
+                    },
+                    {
+                        "name": "71",
+                        "type": "text",
+                        "label": "(BT)"
+                    },
+                    {
+                        "name": "72",
+                        "type": "text",
+                        "label": "(BU)"
+                    },
+                    {
+                        "name": "73",
+                        "type": "text",
+                        "label": "(BV)"
+                    },
+                    {
+                        "name": "74",
+                        "type": "text",
+                        "label": "(BW)"
+                    },
+                    {
+                        "name": "75",
+                        "type": "text",
+                        "label": "(BX)"
+                    },
+                    {
+                        "name": "76",
+                        "type": "text",
+                        "label": "(BY)"
+                    },
+                    {
+                        "name": "77",
+                        "type": "text",
+                        "label": "(BZ)"
+                    },
+                    {
+                        "name": "78",
+                        "type": "text",
+                        "label": "(CA)"
+                    },
+                    {
+                        "name": "79",
+                        "type": "text",
+                        "label": "(CB)"
+                    },
+                    {
+                        "name": "80",
+                        "type": "text",
+                        "label": "(CC)"
+                    },
+                    {
+                        "name": "81",
+                        "type": "text",
+                        "label": "(CD)"
+                    },
+                    {
+                        "name": "82",
+                        "type": "text",
+                        "label": "(CE)"
+                    },
+                    {
+                        "name": "83",
+                        "type": "text",
+                        "label": "(CF)"
+                    },
+                    {
+                        "name": "84",
+                        "type": "text",
+                        "label": "(CG)"
+                    },
+                    {
+                        "name": "85",
+                        "type": "text",
+                        "label": "(CH)"
+                    },
+                    {
+                        "name": "86",
+                        "type": "text",
+                        "label": "(CI)"
+                    },
+                    {
+                        "name": "87",
+                        "type": "text",
+                        "label": "(CJ)"
+                    },
+                    {
+                        "name": "88",
+                        "type": "text",
+                        "label": "(CK)"
+                    },
+                    {
+                        "name": "89",
+                        "type": "text",
+                        "label": "(CL)"
+                    },
+                    {
+                        "name": "90",
+                        "type": "text",
+                        "label": "(CM)"
+                    },
+                    {
+                        "name": "91",
+                        "type": "text",
+                        "label": "(CN)"
+                    },
+                    {
+                        "name": "92",
+                        "type": "text",
+                        "label": "(CO)"
+                    },
+                    {
+                        "name": "93",
+                        "type": "text",
+                        "label": "(CP)"
+                    },
+                    {
+                        "name": "94",
+                        "type": "text",
+                        "label": "(CQ)"
+                    },
+                    {
+                        "name": "95",
+                        "type": "text",
+                        "label": "(CR)"
+                    },
+                    {
+                        "name": "96",
+                        "type": "text",
+                        "label": "(CS)"
+                    },
+                    {
+                        "name": "97",
+                        "type": "text",
+                        "label": "(CT)"
+                    },
+                    {
+                        "name": "98",
+                        "type": "text",
+                        "label": "(CU)"
+                    },
+                    {
+                        "name": "99",
+                        "type": "text",
+                        "label": "(CV)"
+                    },
+                    {
+                        "name": "100",
+                        "type": "text",
+                        "label": "(CW)"
+                    },
+                    {
+                        "name": "101",
+                        "type": "text",
+                        "label": "(CX)"
+                    },
+                    {
+                        "name": "102",
+                        "type": "text",
+                        "label": "(CY)"
+                    },
+                    {
+                        "name": "103",
+                        "type": "text",
+                        "label": "(CZ)"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 300
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 4,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "filter": {
+                                "name": "Basic ",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Toner",
+                                            "o": "text:equal"
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Serum",
+                                            "o": "text:equal"
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Moisturizer / cream",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 150
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 5,
+                                            "module": "email:ActionSendEmail",
+                                            "version": 7,
+                                            "parameters": {
+                                                "account": 5948015,
+                                                "saveAfterSent": false
+                                            },
+                                            "filter": {
+                                                "name": "Ingredients preferences (Hyaluronic acid (hydration))",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{1.`4`}}",
+                                                            "b": "Hyaluronic acid ",
+                                                            "o": "text:contain"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "cc": [],
+                                                "to": [
+                                                    "{{1.`6`}}"
+                                                ],
+                                                "bcc": [],
+                                                "from": "",
+                                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>New Product Launch! Special Care for Your Skin</title>\n<style>\nbody {\nfont-family: Arial, sans-serif;\nmargin: 0;\npadding: 0;\nbackground-color: #f9f9f9;\n}\n.container {\nmax-width: 600px;\nmargin: 20px auto;\nbackground: #ffffff;\npadding: 20px;\nborder-radius: 10px;\nbox-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);\ntext-align: center;\n}\n.header img {\nwidth: 100%;\nborder-radius: 10px 10px 0 0;\n}\n.title {\nfont-size: 22px;\ncolor: #333;\nfont-weight: bold;\nmargin: 20px 0;\n}\n.subtitle {\nfont-size: 16px;\ncolor: #666;\nmargin-bottom: 20px;\n}\n.cta-button {\ndisplay: inline-block;\npadding: 12px 20px;\nmargin-top: 20px;\nbackground-color: #cc002b;\ncolor: #ffffff;\ntext-decoration: none;\nfont-size: 16px;\nfont-weight: bold;\nborder-radius: 5px;\ntransition: background-color 0.3s;\n}\n.cta-button:hover {\nbackground-color: #a40022;\n}\n.footer {\nmargin-top: 30px;\nfont-size: 12px;\ncolor: #999;\n}\n.social-icons {\nmargin-top: 20px;\n}\n.social-icons img {\nwidth: 30px;\nmargin: 0 5px;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"title\">The Perfect Solution for {{1.`1`}} Your Skin 💖</div>\n<div class=\"subtitle\">\nDiscover the power of nature and science combined in our <br>\n<strong>NEW Revital {{1.`3`}}</strong>—featuring {{1.`4`}}-infused ingredients <br>\ndesigned for radiant, healthy-looking skin every day.\n</div>\n<a href=\"https://ualr.edu/cosmetic/shop\" class=\"cta-button\">Shop Now</a>\n<div class=\"footer\">\n© 2025 UALR Cosmetics. All rights reserved. <br>\n*This email was sent from a no-reply address. For assistance, please contact our customer support team.\n</div>\n</div>\n</body>\n</html>\n",
+                                                "sender": "",
+                                                "headers": [],
+                                                "replyTo": "",
+                                                "subject": "The Perfect Solution for Your{{1.`1`}}",
+                                                "priority": "normal",
+                                                "inReplyTo": "",
+                                                "references": [],
+                                                "attachments": [],
+                                                "contentType": "html"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 900,
+                                                    "y": 0
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "cc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "to": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        },
+                                                        "bcc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "priority": {
+                                                            "label": "Normal"
+                                                        },
+                                                        "references": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "attachments": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "contentType": {
+                                                            "label": "HTML"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "account": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "google-restricted"
+                                                            },
+                                                            "label": "My Google Restricted connection"
+                                                        },
+                                                        "saveAfterSent": {
+                                                            "label": "No"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "account",
+                                                        "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "saveAfterSent",
+                                                        "type": "select",
+                                                        "label": "Save message after sending",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                true,
+                                                                false
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "to",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "To",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "subject",
+                                                        "type": "text",
+                                                        "label": "Subject"
+                                                    },
+                                                    {
+                                                        "name": "contentType",
+                                                        "type": "select",
+                                                        "label": "Content Type",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "html",
+                                                                "text"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "attachments",
+                                                        "spec": [
+                                                            {
+                                                                "name": "fileName",
+                                                                "type": "filename",
+                                                                "label": "File name",
+                                                                "required": true,
+                                                                "semantic": "file:name"
+                                                            },
+                                                            {
+                                                                "name": "data",
+                                                                "type": "buffer",
+                                                                "label": "Data",
+                                                                "required": true,
+                                                                "semantic": "file:data"
+                                                            },
+                                                            {
+                                                                "name": "cid",
+                                                                "type": "text",
+                                                                "label": "Content-ID"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Attachments"
+                                                    },
+                                                    {
+                                                        "name": "cc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Copy recipient"
+                                                    },
+                                                    {
+                                                        "name": "bcc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Blind copy recipient"
+                                                    },
+                                                    {
+                                                        "name": "from",
+                                                        "type": "text",
+                                                        "label": "From"
+                                                    },
+                                                    {
+                                                        "name": "sender",
+                                                        "type": "text",
+                                                        "label": "Sender"
+                                                    },
+                                                    {
+                                                        "name": "replyTo",
+                                                        "type": "text",
+                                                        "label": "Reply-To"
+                                                    },
+                                                    {
+                                                        "name": "inReplyTo",
+                                                        "type": "text",
+                                                        "label": "In-Reply-To"
+                                                    },
+                                                    {
+                                                        "name": "references",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "text",
+                                                            "label": "Reference",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "References"
+                                                    },
+                                                    {
+                                                        "name": "priority",
+                                                        "type": "select",
+                                                        "label": "Priority",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "high",
+                                                                "normal",
+                                                                "low"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "headers",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": "Key",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Headers"
+                                                    },
+                                                    {
+                                                        "name": "html",
+                                                        "type": "text",
+                                                        "label": "Content"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 6,
+                                            "module": "email:ActionSendEmail",
+                                            "version": 7,
+                                            "parameters": {
+                                                "account": 5733039,
+                                                "saveAfterSent": false
+                                            },
+                                            "filter": {
+                                                "name": "Ingredients Preferences (AHA/BHA/PHA (exfoliation))",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{1.`4`}}",
+                                                            "b": "AHA/BHA/PHA",
+                                                            "o": "text:contain"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "cc": [],
+                                                "to": [
+                                                    "{{1.`6`}}"
+                                                ],
+                                                "bcc": [],
+                                                "from": "",
+                                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>New Product Launch! Special Care for Your Skin</title>\n<style>\nbody {\nfont-family: Arial, sans-serif;\nmargin: 0;\npadding: 0;\nbackground-color: #f9f9f9;\n}\n.container {\nmax-width: 600px;\nmargin: 20px auto;\nbackground: #ffffff;\npadding: 20px;\nborder-radius: 10px;\nbox-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);\ntext-align: center;\n}\n.header img {\nwidth: 100%;\nborder-radius: 10px 10px 0 0;\n}\n.title {\nfont-size: 22px;\ncolor: #333;\nfont-weight: bold;\nmargin: 20px 0;\n}\n.subtitle {\nfont-size: 16px;\ncolor: #666;\nmargin-bottom: 20px;\n}\n.cta-button {\ndisplay: inline-block;\npadding: 12px 20px;\nmargin-top: 20px;\nbackground-color: #cc002b;\ncolor: #ffffff;\ntext-decoration: none;\nfont-size: 16px;\nfont-weight: bold;\nborder-radius: 5px;\ntransition: background-color 0.3s;\n}\n.cta-button:hover {\nbackground-color: #a40022;\n}\n.footer {\nmargin-top: 30px;\nfont-size: 12px;\ncolor: #999;\n}\n.social-icons {\nmargin-top: 20px;\n}\n.social-icons img {\nwidth: 30px;\nmargin: 0 5px;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"title\">The Perfect Solution for {{1.`1`}} Your Skin 💖</div>\n<div class=\"subtitle\">\nDiscover the power of nature and science combined in our <br>\n<strong>NEW Revital {{1.`3`}}</strong>—featuring {{1.`4`}}-infused ingredients <br>\ndesigned for radiant, healthy-looking skin every day.\n</div>\n<a href=\"https://ualr.edu/cosmetic/shop\" class=\"cta-button\">Shop Now</a>\n<div class=\"footer\">\n© 2025 UALR Cosmetics. All rights reserved. <br>\n*This email was sent from a no-reply address. For assistance, please contact our customer support team.\n</div>\n</div>\n</body>\n</html>\n",
+                                                "sender": "",
+                                                "headers": [],
+                                                "replyTo": "",
+                                                "subject": "The Perfect Solution for Your{{1.`1`}}",
+                                                "priority": "normal",
+                                                "inReplyTo": "",
+                                                "references": [],
+                                                "attachments": [],
+                                                "contentType": "html"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 900,
+                                                    "y": 300
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "cc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "to": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        },
+                                                        "bcc": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "priority": {
+                                                            "label": "Normal"
+                                                        },
+                                                        "references": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "attachments": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "contentType": {
+                                                            "label": "HTML"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "account": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "google-restricted"
+                                                            },
+                                                            "label": "My Google Restricted connection (makepractice2025@gmail.com)"
+                                                        },
+                                                        "saveAfterSent": {
+                                                            "label": "No"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "account",
+                                                        "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "saveAfterSent",
+                                                        "type": "select",
+                                                        "label": "Save message after sending",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                true,
+                                                                false
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "to",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "To",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "subject",
+                                                        "type": "text",
+                                                        "label": "Subject"
+                                                    },
+                                                    {
+                                                        "name": "contentType",
+                                                        "type": "select",
+                                                        "label": "Content Type",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "html",
+                                                                "text"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "attachments",
+                                                        "spec": [
+                                                            {
+                                                                "name": "fileName",
+                                                                "type": "filename",
+                                                                "label": "File name",
+                                                                "required": true,
+                                                                "semantic": "file:name"
+                                                            },
+                                                            {
+                                                                "name": "data",
+                                                                "type": "buffer",
+                                                                "label": "Data",
+                                                                "required": true,
+                                                                "semantic": "file:data"
+                                                            },
+                                                            {
+                                                                "name": "cid",
+                                                                "type": "text",
+                                                                "label": "Content-ID"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Attachments"
+                                                    },
+                                                    {
+                                                        "name": "cc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Copy recipient"
+                                                    },
+                                                    {
+                                                        "name": "bcc",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "email",
+                                                            "label": "Email address"
+                                                        },
+                                                        "type": "array",
+                                                        "label": "Blind copy recipient"
+                                                    },
+                                                    {
+                                                        "name": "from",
+                                                        "type": "text",
+                                                        "label": "From"
+                                                    },
+                                                    {
+                                                        "name": "sender",
+                                                        "type": "text",
+                                                        "label": "Sender"
+                                                    },
+                                                    {
+                                                        "name": "replyTo",
+                                                        "type": "text",
+                                                        "label": "Reply-To"
+                                                    },
+                                                    {
+                                                        "name": "inReplyTo",
+                                                        "type": "text",
+                                                        "label": "In-Reply-To"
+                                                    },
+                                                    {
+                                                        "name": "references",
+                                                        "spec": {
+                                                            "name": "value",
+                                                            "type": "text",
+                                                            "label": "Reference",
+                                                            "required": true
+                                                        },
+                                                        "type": "array",
+                                                        "label": "References"
+                                                    },
+                                                    {
+                                                        "name": "priority",
+                                                        "type": "select",
+                                                        "label": "Priority",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "high",
+                                                                "normal",
+                                                                "low"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "headers",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": "Key",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Headers"
+                                                    },
+                                                    {
+                                                        "name": "html",
+                                                        "type": "text",
+                                                        "label": "Content"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": 5733039,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Sunscreen customer",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.`3`}}",
+                                            "b": "Sunscreen",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "cc": [],
+                                "to": [
+                                    "{{1.`6`}}"
+                                ],
+                                "bcc": [],
+                                "from": "",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>New Product Launch! Special Care for Your Skin</title>\n<style>\nbody {\nfont-family: Arial, sans-serif;\nmargin: 0;\npadding: 0;\nbackground-color: #f9f9f9;\n}\n.container {\nmax-width: 600px;\nmargin: 20px auto;\nbackground: #ffffff;\npadding: 20px;\nborder-radius: 10px;\nbox-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);\ntext-align: center;\n}\n.header img {\nwidth: 100%;\nborder-radius: 10px 10px 0 0;\n}\n.title {\nfont-size: 22px;\ncolor: #333;\nfont-weight: bold;\nmargin: 20px 0;\n}\n.subtitle {\nfont-size: 16px;\ncolor: #666;\nmargin-bottom: 20px;\n}\n.cta-button {\ndisplay: inline-block;\npadding: 12px 20px;\nmargin-top: 20px;\nbackground-color: #cc002b;\ncolor: #ffffff;\ntext-decoration: none;\nfont-size: 16px;\nfont-weight: bold;\nborder-radius: 5px;\ntransition: background-color 0.3s;\n}\n.cta-button:hover {\nbackground-color: #a40022;\n}\n.footer {\nmargin-top: 30px;\nfont-size: 12px;\ncolor: #999;\n}\n.social-icons {\nmargin-top: 20px;\n}\n.social-icons img {\nwidth: 30px;\nmargin: 0 5px;\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"title\">The Perfect Solution for {{1.`1`}} Your Skin 💖</div>\n<div class=\"subtitle\">\nDiscover the power of nature and science combined in our <br>\n<strong>NEW Revital {{1.`3`}}</strong>—featuring {{1.`4`}}-infused ingredients <br>\ndesigned for radiant, healthy-looking skin every day.\n</div>\n<a href=\"https://ualr.edu/cosmetic/shop\" class=\"cta-button\">Shop Now</a>\n<div class=\"footer\">\n© 2025 UALR Cosmetics. All rights reserved. <br>\n*This email was sent from a no-reply address. For assistance, please contact our customer support team.\n</div>\n</div>\n</body>\n</html>\n",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "subject": "The Perfect Solution for Your{{1.`1`}}",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "cc": {
+                                            "mode": "chose"
+                                        },
+                                        "to": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        },
+                                        "bcc": {
+                                            "mode": "chose"
+                                        },
+                                        "priority": {
+                                            "label": "Normal"
+                                        },
+                                        "references": {
+                                            "mode": "chose"
+                                        },
+                                        "attachments": {
+                                            "mode": "chose"
+                                        },
+                                        "contentType": {
+                                            "label": "HTML"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "account": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google-restricted"
+                                            },
+                                            "label": "My Google Restricted connection (makepractice2025@gmail.com)"
+                                        },
+                                        "saveAfterSent": {
+                                            "label": "No"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "account",
+                                        "type": "account:smtp,google-restricted,microsoft-smtp-imap",
+                                        "label": "Connection",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "saveAfterSent",
+                                        "type": "select",
+                                        "label": "Save message after sending",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                true,
+                                                false
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "to",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address",
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "To",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "subject",
+                                        "type": "text",
+                                        "label": "Subject"
+                                    },
+                                    {
+                                        "name": "contentType",
+                                        "type": "select",
+                                        "label": "Content Type",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "html",
+                                                "text"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "attachments",
+                                        "spec": [
+                                            {
+                                                "name": "fileName",
+                                                "type": "filename",
+                                                "label": "File name",
+                                                "required": true,
+                                                "semantic": "file:name"
+                                            },
+                                            {
+                                                "name": "data",
+                                                "type": "buffer",
+                                                "label": "Data",
+                                                "required": true,
+                                                "semantic": "file:data"
+                                            },
+                                            {
+                                                "name": "cid",
+                                                "type": "text",
+                                                "label": "Content-ID"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Attachments"
+                                    },
+                                    {
+                                        "name": "cc",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address"
+                                        },
+                                        "type": "array",
+                                        "label": "Copy recipient"
+                                    },
+                                    {
+                                        "name": "bcc",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address"
+                                        },
+                                        "type": "array",
+                                        "label": "Blind copy recipient"
+                                    },
+                                    {
+                                        "name": "from",
+                                        "type": "text",
+                                        "label": "From"
+                                    },
+                                    {
+                                        "name": "sender",
+                                        "type": "text",
+                                        "label": "Sender"
+                                    },
+                                    {
+                                        "name": "replyTo",
+                                        "type": "text",
+                                        "label": "Reply-To"
+                                    },
+                                    {
+                                        "name": "inReplyTo",
+                                        "type": "text",
+                                        "label": "In-Reply-To"
+                                    },
+                                    {
+                                        "name": "references",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Reference",
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "References"
+                                    },
+                                    {
+                                        "name": "priority",
+                                        "type": "select",
+                                        "label": "Priority",
+                                        "validate": {
+                                            "enum": [
+                                                "high",
+                                                "normal",
+                                                "low"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value",
+                                                "required": true
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "html",
+                                        "type": "text",
+                                        "label": "Content"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}

@@ -1,0 +1,580 @@
+{
+    "name": "ML-Based Customer Purchase Prediction & Email Marketing",
+    "flow": [
+        {
+            "id": 1,
+            "module": "google-sheets:watchRows",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": null
+            },
+            "mapper": {
+                "from": "share",
+                "sheetId": "Sheet1",
+                "spreadsheetId": "YOUR_SPREADSHEET_ID",
+                "tableFirstRow": "A1:Z1",
+                "includesHeaders": true,
+                "valueRenderOption": "FORMATTED_VALUE",
+                "dateTimeRenderOption": "FORMATTED_STRING"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "Select from all"
+                        },
+                        "sheetId": {
+                            "mode": "chose",
+                            "label": "Sheet1"
+                        },
+                        "tableFirstRow": {
+                            "label": "A-Z"
+                        },
+                        "includesHeaders": {
+                            "mode": "chose",
+                            "label": "Yes"
+                        },
+                        "valueRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted value"
+                        },
+                        "dateTimeRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted string"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": ["drive", "share"]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "text",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true
+                    },
+                    {
+                        "name": "tableFirstRow",
+                        "type": "select",
+                        "label": "Column range",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__ROW_NUMBER__",
+                        "type": "number",
+                        "label": "Row number"
+                    },
+                    {
+                        "name": "0",
+                        "type": "text",
+                        "label": "customer_id (A)"
+                    },
+                    {
+                        "name": "1",
+                        "type": "text",
+                        "label": "customer_email (B)"
+                    },
+                    {
+                        "name": "2",
+                        "type": "text",
+                        "label": "customer_name (C)"
+                    },
+                    {
+                        "name": "3",
+                        "type": "text",
+                        "label": "purchase_date (D)"
+                    },
+                    {
+                        "name": "4",
+                        "type": "text",
+                        "label": "product_category (E)"
+                    },
+                    {
+                        "name": "5",
+                        "type": "text",
+                        "label": "purchase_amount (F)"
+                    },
+                    {
+                        "name": "6",
+                        "type": "text",
+                        "label": "days_since_last_purchase (G)"
+                    },
+                    {
+                        "name": "7",
+                        "type": "text",
+                        "label": "total_purchases (H)"
+                    },
+                    {
+                        "name": "8",
+                        "type": "text",
+                        "label": "avg_purchase_amount (I)"
+                    },
+                    {
+                        "name": "9",
+                        "type": "text",
+                        "label": "preferred_category (J)"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {},
+            "mapper": {
+                "url": "YOUR_ML_API_URL/predict",
+                "method": "post",
+                "headers": [
+                    {
+                        "name": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": "{\"customer_id\": \"{{1.`0`}}\", \"customer_email\": \"{{1.`1`}}\", \"customer_name\": \"{{1.`2`}}\", \"days_since_last_purchase\": {{1.`6`}}, \"total_purchases\": {{1.`7`}}, \"avg_purchase_amount\": {{1.`8`}}, \"preferred_category\": \"{{1.`9`}}\"}",
+                "timeout": 300,
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": true,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [null]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": ["get", "post", "put", "patch", "delete", "options"]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "body",
+                        "type": "text",
+                        "label": "Request content"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "json:ParseJSON",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "json": "{{2.data}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "json": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "json",
+                        "type": "text",
+                        "label": "JSON string",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "customer_id",
+                        "type": "text",
+                        "label": "customer_id"
+                    },
+                    {
+                        "name": "customer_email",
+                        "type": "text",
+                        "label": "customer_email"
+                    },
+                    {
+                        "name": "customer_name",
+                        "type": "text",
+                        "label": "customer_name"
+                    },
+                    {
+                        "name": "predicted_days_until_next_purchase",
+                        "type": "number",
+                        "label": "predicted_days_until_next_purchase"
+                    },
+                    {
+                        "name": "predicted_purchase_date",
+                        "type": "text",
+                        "label": "predicted_purchase_date"
+                    },
+                    {
+                        "name": "should_send_email",
+                        "type": "boolean",
+                        "label": "should_send_email"
+                    },
+                    {
+                        "name": "confidence_score",
+                        "type": "number",
+                        "label": "confidence_score"
+                    },
+                    {
+                        "name": "email_timing",
+                        "type": "text",
+                        "label": "email_timing"
+                    },
+                    {
+                        "name": "preferred_category",
+                        "type": "text",
+                        "label": "preferred_category"
+                    },
+                    {
+                        "name": "recommended_products",
+                        "type": "array",
+                        "label": "recommended_products"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 5,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Send Now - High Priority",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.email_timing}}",
+                                            "b": "send_now",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Personalized Offer</title>\n<style>\nbody { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }\n.container { max-width: 600px; margin: 20px auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }\n.header { text-align: center; color: #2c3e50; margin-bottom: 20px; }\n.prediction-box { background: #e8f4f8; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3498db; }\n.products { margin: 20px 0; }\n.product-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }\n.cta-button { display: inline-block; padding: 15px 30px; background: #3498db; color: #ffffff; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }\n.cta-button:hover { background: #2980b9; }\n.footer { text-align: center; margin-top: 30px; font-size: 12px; color: #7f8c8d; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"header\">\n<h1>Hello {{3.customer_name}}! 👋</h1>\n<p>We've noticed you might be interested in shopping soon!</p>\n</div>\n\n<div class=\"prediction-box\">\n<h3>🤖 AI-Powered Insights</h3>\n<p><strong>Our ML model predicts</strong> you'll be ready to shop in approximately <strong>{{3.predicted_days_until_next_purchase}} days</strong> (around {{3.predicted_purchase_date}}).</p>\n<p>Confidence Score: {{3.confidence_score}} ⭐</p>\n</div>\n\n<div class=\"products\">\n<h3>Recommended for You - {{3.preferred_category}}</h3>\n<p>Based on your purchase history, we think you'll love these:</p>\n{{#each 3.recommended_products}}\n<div class=\"product-item\">\n<strong>✓</strong> {{this}}\n</div>\n{{/each}}\n</div>\n\n<div style=\"text-align: center;\">\n<a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}\" class=\"cta-button\">Shop Now & Save 20%</a>\n</div>\n\n<div class=\"footer\">\n<p>🤖 This email was intelligently timed using Machine Learning</p>\n<p>Customer ID: {{3.customer_id}}</p>\n<p>© 2025 Your Store. All rights reserved.</p>\n</div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "high",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": -150
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "to": {
+                                            "mode": "chose",
+                                            "items": [null]
+                                        },
+                                        "cc": {
+                                            "mode": "chose"
+                                        },
+                                        "bcc": {
+                                            "mode": "chose"
+                                        },
+                                        "priority": {
+                                            "label": "High"
+                                        },
+                                        "references": {
+                                            "mode": "chose"
+                                        },
+                                        "attachments": {
+                                            "mode": "chose"
+                                        },
+                                        "contentType": {
+                                            "label": "HTML"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "account": {
+                                            "label": "Your Email Connection"
+                                        },
+                                        "saveAfterSent": {
+                                            "label": "No"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "YOUR_SPREADSHEET_ID",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": -150
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "mode": {
+                                            "label": "Select by path"
+                                        },
+                                        "from": {
+                                            "label": "Select from all"
+                                        },
+                                        "sheetId": {
+                                            "mode": "chose",
+                                            "label": "Sheet1"
+                                        },
+                                        "tableFirstRow": {
+                                            "label": "A-Z"
+                                        },
+                                        "includesHeaders": {
+                                            "mode": "chose",
+                                            "label": "Yes"
+                                        },
+                                        "valueInputOption": {
+                                            "mode": "chose",
+                                            "label": "User entered"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 7,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Send Soon - Medium Priority",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.email_timing}}",
+                                            "b": "send_soon",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "📧 Don't Miss Out, {{3.customer_name}} - Exclusive Deals Inside",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Upcoming Offers</title>\n<style>\nbody { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }\n.container { max-width: 600px; margin: 20px auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }\n.header { text-align: center; color: #2c3e50; margin-bottom: 20px; }\n.info-box { background: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107; }\n.cta-button { display: inline-block; padding: 15px 30px; background: #ffc107; color: #000; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }\n.footer { text-align: center; margin-top: 30px; font-size: 12px; color: #7f8c8d; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"header\">\n<h1>Hi {{3.customer_name}}! 👋</h1>\n<p>We're getting your favorites ready!</p>\n</div>\n\n<div class=\"info-box\">\n<h3>⏰ Perfect Timing</h3>\n<p>Our smart system suggests you might be shopping around <strong>{{3.predicted_purchase_date}}</strong>.</p>\n<p>We're preparing special offers just for you!</p>\n</div>\n\n<div style=\"text-align: center;\">\n<a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}\" class=\"cta-button\">Browse Early & Get 15% Off</a>\n</div>\n\n<div class=\"footer\">\n<p>🤖 Smart email powered by Machine Learning</p>\n<p>© 2025 Your Store. All rights reserved.</p>\n</div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 150
+                                }
+                            }
+                        },
+                        {
+                            "id": 8,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "YOUR_SPREADSHEET_ID",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Scheduled",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 150
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": [
+            {
+                "id": 1,
+                "text": "ML-Based Customer Purchase Prediction System\n\nThis scenario:\n1. Monitors Google Sheets for customer data\n2. Calls ML API to predict next purchase\n3. Sends personalized emails based on AI predictions\n4. Updates tracking data in Google Sheets\n\nSetup Required:\n- ML API running (use ml_prediction_api.py)\n- Google Sheets with customer data\n- Email connection configured\n- Update spreadsheet IDs and API URL"
+            }
+        ]
+    }
+}

@@ -1,0 +1,749 @@
+{
+    "name": "ML-Based Customer Purchase Prediction & Email Marketing (Category Images)",
+    "flow": [
+        {
+            "id": 1,
+            "module": "google-sheets:watchRows",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": null
+            },
+            "mapper": {
+                "from": "share",
+                "sheetId": "Sheet1",
+                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                "tableFirstRow": "A1:Z1",
+                "includesHeaders": true,
+                "valueRenderOption": "FORMATTED_VALUE",
+                "dateTimeRenderOption": "FORMATTED_STRING"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "Select from all"
+                        },
+                        "sheetId": {
+                            "mode": "chose",
+                            "label": "Sheet1"
+                        },
+                        "tableFirstRow": {
+                            "label": "A-Z"
+                        },
+                        "includesHeaders": {
+                            "mode": "chose",
+                            "label": "Yes"
+                        },
+                        "valueRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted value"
+                        },
+                        "dateTimeRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted string"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": ["drive", "share"]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "text",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true
+                    },
+                    {
+                        "name": "tableFirstRow",
+                        "type": "select",
+                        "label": "Column range",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__ROW_NUMBER__",
+                        "type": "number",
+                        "label": "Row number"
+                    },
+                    {
+                        "name": "0",
+                        "type": "text",
+                        "label": "customer_id (A)"
+                    },
+                    {
+                        "name": "1",
+                        "type": "text",
+                        "label": "customer_email (B)"
+                    },
+                    {
+                        "name": "2",
+                        "type": "text",
+                        "label": "customer_name (C)"
+                    },
+                    {
+                        "name": "3",
+                        "type": "text",
+                        "label": "purchase_date (D)"
+                    },
+                    {
+                        "name": "4",
+                        "type": "text",
+                        "label": "product_category (E)"
+                    },
+                    {
+                        "name": "5",
+                        "type": "text",
+                        "label": "purchase_amount (F)"
+                    },
+                    {
+                        "name": "6",
+                        "type": "text",
+                        "label": "days_since_last_purchase (G)"
+                    },
+                    {
+                        "name": "7",
+                        "type": "text",
+                        "label": "total_purchases (H)"
+                    },
+                    {
+                        "name": "8",
+                        "type": "text",
+                        "label": "avg_purchase_amount (I)"
+                    },
+                    {
+                        "name": "9",
+                        "type": "text",
+                        "label": "preferred_category (J)"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {
+                "handleErrors": false
+            },
+            "mapper": {
+                "url": "https://ten-bats-glow.loca.lt/predict",
+                "method": "post",
+                "headers": [
+                    {
+                        "name": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": "{\"customer_id\": \"{{1.`0`}}\", \"customer_email\": \"{{1.`1`}}\", \"customer_name\": \"{{1.`2`}}\", \"days_since_last_purchase\": {{1.`6`}}, \"total_purchases\": {{1.`7`}}, \"avg_purchase_amount\": {{1.`8`}}, \"preferred_category\": \"{{1.`9`}}\"}",
+                "timeout": 300,
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": true,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [null]
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": ["get", "post", "put", "patch", "delete", "options"]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "body",
+                        "type": "text",
+                        "label": "Request content"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "json:ParseJSON",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "json": "{{2.data}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "json": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "json",
+                        "type": "text",
+                        "label": "JSON string",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "customer_id",
+                        "type": "text",
+                        "label": "customer_id"
+                    },
+                    {
+                        "name": "customer_email",
+                        "type": "text",
+                        "label": "customer_email"
+                    },
+                    {
+                        "name": "customer_name",
+                        "type": "text",
+                        "label": "customer_name"
+                    },
+                    {
+                        "name": "predicted_days_until_next_purchase",
+                        "type": "number",
+                        "label": "predicted_days_until_next_purchase"
+                    },
+                    {
+                        "name": "predicted_purchase_date",
+                        "type": "text",
+                        "label": "predicted_purchase_date"
+                    },
+                    {
+                        "name": "should_send_email",
+                        "type": "boolean",
+                        "label": "should_send_email"
+                    },
+                    {
+                        "name": "confidence_score",
+                        "type": "number",
+                        "label": "confidence_score"
+                    },
+                    {
+                        "name": "email_timing",
+                        "type": "text",
+                        "label": "email_timing"
+                    },
+                    {
+                        "name": "preferred_category",
+                        "type": "text",
+                        "label": "preferred_category"
+                    },
+                    {
+                        "name": "recommended_products",
+                        "type": "array",
+                        "label": "recommended_products"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 5,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Electronics Category",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.preferred_category}}",
+                                            "b": "Electronics",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Exclusive Offer</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\n        line-height: 1.6;\n        color: #333333;\n        background-color: #f4f4f4;\n    }\n    .container {\n        max-width: 600px;\n        margin: 0 auto;\n        background: #ffffff;\n    }\n\n    /* Header */\n    .header {\n        background: #7C2529;\n        padding: 15px 20px;\n        text-align: center;\n    }\n    .header .logo {\n        font-size: 22px;\n        font-weight: 700;\n        color: #ffffff;\n        letter-spacing: 0.5px;\n    }\n\n    /* Promotion Banner */\n    .promo-banner {\n        background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%);\n        padding: 50px 20px;\n        text-align: center;\n        color: white;\n        border-bottom: 5px solid #FDB913;\n    }\n    .promo-label {\n        font-size: 14px;\n        font-weight: 600;\n        text-transform: uppercase;\n        letter-spacing: 2px;\n        margin-bottom: 10px;\n        color: #FDB913;\n    }\n    .promo-title {\n        font-size: 48px;\n        font-weight: 900;\n        line-height: 1.1;\n        margin-bottom: 10px;\n    }\n    .promo-subtitle {\n        font-size: 20px;\n        margin-bottom: 20px;\n        font-weight: 400;\n    }\n    .promo-cta {\n        display: inline-block;\n        background: #FDB913;\n        color: #7C2529;\n        padding: 15px 40px;\n        text-decoration: none;\n        font-weight: 700;\n        font-size: 16px;\n        border-radius: 30px;\n        margin-top: 10px;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    /* Category Hero Image */\n    .category-hero {\n        text-align: center;\n        padding: 0;\n        background: #f9f9f9;\n    }\n    .category-hero img {\n        width: 100%;\n        max-width: 600px;\n        height: auto;\n        display: block;\n    }\n\n    /* Timing Alert */\n    .timing-alert {\n        background: #FFF9E6;\n        border-left: 4px solid #FDB913;\n        padding: 20px;\n        margin: 0;\n    }\n    .timing-alert h3 {\n        font-size: 16px;\n        color: #7C2529;\n        margin-bottom: 8px;\n        display: flex;\n        align-items: center;\n    }\n    .timing-alert p {\n        font-size: 14px;\n        color: #555;\n        margin: 5px 0;\n    }\n    .timing-date {\n        font-weight: 700;\n        color: #7C2529;\n        font-size: 18px;\n    }\n\n    /* Products Section */\n    .products-section {\n        padding: 40px 20px;\n        background: white;\n    }\n    .products-section h2 {\n        font-size: 24px;\n        margin-bottom: 10px;\n        color: #222;\n    }\n    .category-badge {\n        display: inline-block;\n        background: #7C2529;\n        color: white;\n        padding: 6px 15px;\n        border-radius: 20px;\n        font-size: 13px;\n        font-weight: 600;\n        margin-bottom: 20px;\n    }\n    .product-item {\n        background: #f9f9f9;\n        padding: 15px;\n        margin-bottom: 12px;\n        border-radius: 6px;\n        border-left: 4px solid #7C2529;\n        font-size: 15px;\n        color: #333;\n    }\n    .product-item:before {\n        content: \"✓\";\n        color: #7C2529;\n        font-weight: bold;\n        margin-right: 10px;\n    }\n\n    /* Special Offer Box */\n    .offer-box {\n        background: #7C2529;\n        color: white;\n        padding: 30px 20px;\n        text-align: center;\n        margin: 30px 20px;\n        border-radius: 10px;\n    }\n    .offer-box h3 {\n        font-size: 32px;\n        margin-bottom: 15px;\n    }\n    .offer-code {\n        background: white;\n        color: #7C2529;\n        padding: 15px 30px;\n        display: inline-block;\n        border-radius: 5px;\n        font-size: 24px;\n        font-weight: 900;\n        letter-spacing: 3px;\n        font-family: 'Courier New', monospace;\n        margin: 10px 0;\n    }\n    .offer-expiry {\n        font-size: 14px;\n        margin-top: 10px;\n        color: #FDB913;\n    }\n\n    /* Shop Button */\n    .shop-section {\n        text-align: center;\n        padding: 30px 20px;\n        background: white;\n    }\n    .shop-btn {\n        display: inline-block;\n        background: #7C2529;\n        color: white;\n        padding: 18px 60px;\n        text-decoration: none;\n        font-size: 18px;\n        font-weight: 700;\n        border-radius: 5px;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    /* Footer */\n    .footer {\n        background: #f4f4f4;\n        padding: 30px 20px;\n        text-align: center;\n        border-top: 3px solid #7C2529;\n    }\n    .footer-text {\n        font-size: 12px;\n        color: #666;\n        margin: 10px 0;\n    }\n    .social-icons {\n        margin: 20px 0;\n    }\n    .social-icons a {\n        display: inline-block;\n        margin: 0 8px;\n    }\n    .social-icons img {\n        width: 30px;\n        height: 30px;\n    }\n    .footer-links {\n        margin-top: 20px;\n        padding-top: 20px;\n        border-top: 1px solid #ddd;\n    }\n    .footer-links a {\n        color: #7C2529;\n        text-decoration: none;\n        margin: 0 10px;\n        font-size: 12px;\n    }\n    .copyright {\n        margin-top: 15px;\n        font-size: 11px;\n        color: #999;\n    }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <!-- Header -->\n    <div class=\"header\">\n        <div class=\"logo\">UA LITTLE ROCK</div>\n    </div>\n\n    <!-- Main Promotion Banner -->\n    <div class=\"promo-banner\">\n        <div class=\"promo-label\">PERSONALIZED FOR YOU</div>\n        <div class=\"promo-title\">20% OFF</div>\n        <div class=\"promo-subtitle\">Electronics & Tech</div>\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=electronics\" class=\"promo-cta\">Shop Electronics</a>\n    </div>\n\n    <!-- Category Hero Image -->\n    <div class=\"category-hero\">\n        <!-- Replace YOUR_ELECTRONICS_IMAGE_ID with your Google Drive file ID -->\n        <img src=\"https://drive.google.com/uc?export=view&id=YOUR_ELECTRONICS_IMAGE_ID\" alt=\"Electronics\">\n    </div>\n\n    <!-- Perfect Timing Alert -->\n    <div class=\"timing-alert\">\n        <h3>⏰ Perfect Timing</h3>\n        <p>Our smart system suggests you might be shopping around <span class=\"timing-date\">{{3.predicted_purchase_date}}</span></p>\n        <p>We're preparing special offers just for you!</p>\n    </div>\n\n    <!-- Recommended Products -->\n    <div class=\"products-section\">\n        <h2>Top Picks in Electronics</h2>\n        <div class=\"category-badge\">⚡ Electronics</div>\n\n        {{#each 3.recommended_products}}\n        <div class=\"product-item\">{{this}}</div>\n        {{/each}}\n    </div>\n\n    <!-- Promo Code -->\n    <div class=\"offer-box\">\n        <h3>Your Exclusive Code</h3>\n        <div class=\"offer-code\">UALR20</div>\n        <div class=\"offer-expiry\">⏰ Expires in 48 hours</div>\n    </div>\n\n    <!-- Shop Now Button -->\n    <div class=\"shop-section\">\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=electronics\" class=\"shop-btn\">Shop Now</a>\n    </div>\n\n    <!-- Footer -->\n    <div class=\"footer\">\n        <div class=\"social-icons\">\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733579.png\" alt=\"Twitter\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\"></a>\n        </div>\n\n        <p class=\"footer-text\">\n            <strong>Smart email powered by Machine Learning</strong><br>\n            This message was sent based on your shopping patterns.\n        </p>\n\n        <div class=\"footer-links\">\n            <a href=\"#\">Unsubscribe</a>\n            <a href=\"#\">Preferences</a>\n            <a href=\"#\">Privacy Policy</a>\n        </div>\n\n        <p class=\"copyright\">© 2025 UA Little Rock. All rights reserved.</p>\n    </div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "high",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": -400
+                                }
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent - Electronics",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": -400
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 7,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Fashion Category",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.preferred_category}}",
+                                            "b": "Fashion",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Exclusive Offer</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\n        line-height: 1.6;\n        color: #333333;\n        background-color: #f4f4f4;\n    }\n    .container {\n        max-width: 600px;\n        margin: 0 auto;\n        background: #ffffff;\n    }\n\n    .header {\n        background: #7C2529;\n        padding: 15px 20px;\n        text-align: center;\n    }\n    .header .logo {\n        font-size: 22px;\n        font-weight: 700;\n        color: #ffffff;\n        letter-spacing: 0.5px;\n    }\n\n    .promo-banner {\n        background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%);\n        padding: 50px 20px;\n        text-align: center;\n        color: white;\n        border-bottom: 5px solid #FDB913;\n    }\n    .promo-label {\n        font-size: 14px;\n        font-weight: 600;\n        text-transform: uppercase;\n        letter-spacing: 2px;\n        margin-bottom: 10px;\n        color: #FDB913;\n    }\n    .promo-title {\n        font-size: 48px;\n        font-weight: 900;\n        line-height: 1.1;\n        margin-bottom: 10px;\n    }\n    .promo-subtitle {\n        font-size: 20px;\n        margin-bottom: 20px;\n        font-weight: 400;\n    }\n    .promo-cta {\n        display: inline-block;\n        background: #FDB913;\n        color: #7C2529;\n        padding: 15px 40px;\n        text-decoration: none;\n        font-weight: 700;\n        font-size: 16px;\n        border-radius: 30px;\n        margin-top: 10px;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    .category-hero {\n        text-align: center;\n        padding: 0;\n        background: #f9f9f9;\n    }\n    .category-hero img {\n        width: 100%;\n        max-width: 600px;\n        height: auto;\n        display: block;\n    }\n\n    .timing-alert {\n        background: #FFF9E6;\n        border-left: 4px solid #FDB913;\n        padding: 20px;\n        margin: 0;\n    }\n    .timing-alert h3 {\n        font-size: 16px;\n        color: #7C2529;\n        margin-bottom: 8px;\n    }\n    .timing-alert p {\n        font-size: 14px;\n        color: #555;\n        margin: 5px 0;\n    }\n    .timing-date {\n        font-weight: 700;\n        color: #7C2529;\n        font-size: 18px;\n    }\n\n    .products-section {\n        padding: 40px 20px;\n        background: white;\n    }\n    .products-section h2 {\n        font-size: 24px;\n        margin-bottom: 10px;\n        color: #222;\n    }\n    .category-badge {\n        display: inline-block;\n        background: #7C2529;\n        color: white;\n        padding: 6px 15px;\n        border-radius: 20px;\n        font-size: 13px;\n        font-weight: 600;\n        margin-bottom: 20px;\n    }\n    .product-item {\n        background: #f9f9f9;\n        padding: 15px;\n        margin-bottom: 12px;\n        border-radius: 6px;\n        border-left: 4px solid #7C2529;\n        font-size: 15px;\n        color: #333;\n    }\n    .product-item:before {\n        content: \"✓\";\n        color: #7C2529;\n        font-weight: bold;\n        margin-right: 10px;\n    }\n\n    .offer-box {\n        background: #7C2529;\n        color: white;\n        padding: 30px 20px;\n        text-align: center;\n        margin: 30px 20px;\n        border-radius: 10px;\n    }\n    .offer-box h3 {\n        font-size: 32px;\n        margin-bottom: 15px;\n    }\n    .offer-code {\n        background: white;\n        color: #7C2529;\n        padding: 15px 30px;\n        display: inline-block;\n        border-radius: 5px;\n        font-size: 24px;\n        font-weight: 900;\n        letter-spacing: 3px;\n        font-family: 'Courier New', monospace;\n        margin: 10px 0;\n    }\n    .offer-expiry {\n        font-size: 14px;\n        margin-top: 10px;\n        color: #FDB913;\n    }\n\n    .shop-section {\n        text-align: center;\n        padding: 30px 20px;\n        background: white;\n    }\n    .shop-btn {\n        display: inline-block;\n        background: #7C2529;\n        color: white;\n        padding: 18px 60px;\n        text-decoration: none;\n        font-size: 18px;\n        font-weight: 700;\n        border-radius: 5px;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    .footer {\n        background: #f4f4f4;\n        padding: 30px 20px;\n        text-align: center;\n        border-top: 3px solid #7C2529;\n    }\n    .footer-text {\n        font-size: 12px;\n        color: #666;\n        margin: 10px 0;\n    }\n    .social-icons {\n        margin: 20px 0;\n    }\n    .social-icons a {\n        display: inline-block;\n        margin: 0 8px;\n    }\n    .social-icons img {\n        width: 30px;\n        height: 30px;\n    }\n    .footer-links {\n        margin-top: 20px;\n        padding-top: 20px;\n        border-top: 1px solid #ddd;\n    }\n    .footer-links a {\n        color: #7C2529;\n        text-decoration: none;\n        margin: 0 10px;\n        font-size: 12px;\n    }\n    .copyright {\n        margin-top: 15px;\n        font-size: 11px;\n        color: #999;\n    }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\">\n        <div class=\"logo\">UA LITTLE ROCK</div>\n    </div>\n\n    <div class=\"promo-banner\">\n        <div class=\"promo-label\">PERSONALIZED FOR YOU</div>\n        <div class=\"promo-title\">20% OFF</div>\n        <div class=\"promo-subtitle\">Fashion & Style</div>\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=fashion\" class=\"promo-cta\">Shop Fashion</a>\n    </div>\n\n    <div class=\"category-hero\">\n        <img src=\"https://drive.google.com/uc?export=view&id=YOUR_FASHION_IMAGE_ID\" alt=\"Fashion\">\n    </div>\n\n    <div class=\"timing-alert\">\n        <h3>⏰ Perfect Timing</h3>\n        <p>Our smart system suggests you might be shopping around <span class=\"timing-date\">{{3.predicted_purchase_date}}</span></p>\n        <p>We're preparing special offers just for you!</p>\n    </div>\n\n    <div class=\"products-section\">\n        <h2>Trending in Fashion</h2>\n        <div class=\"category-badge\">👗 Fashion</div>\n\n        {{#each 3.recommended_products}}\n        <div class=\"product-item\">{{this}}</div>\n        {{/each}}\n    </div>\n\n    <div class=\"offer-box\">\n        <h3>Your Exclusive Code</h3>\n        <div class=\"offer-code\">UALR20</div>\n        <div class=\"offer-expiry\">⏰ Expires in 48 hours</div>\n    </div>\n\n    <div class=\"shop-section\">\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=fashion\" class=\"shop-btn\">Shop Now</a>\n    </div>\n\n    <div class=\"footer\">\n        <div class=\"social-icons\">\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733579.png\" alt=\"Twitter\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\"></a>\n        </div>\n\n        <p class=\"footer-text\">\n            <strong>Smart email powered by Machine Learning</strong><br>\n            This message was sent based on your shopping patterns.\n        </p>\n\n        <div class=\"footer-links\">\n            <a href=\"#\">Unsubscribe</a>\n            <a href=\"#\">Preferences</a>\n            <a href=\"#\">Privacy Policy</a>\n        </div>\n\n        <p class=\"copyright\">© 2025 UA Little Rock. All rights reserved.</p>\n    </div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": -200
+                                }
+                            }
+                        },
+                        {
+                            "id": 8,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent - Fashion",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": -200
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Beauty Category",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.preferred_category}}",
+                                            "b": "Beauty",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Exclusive Offer</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;\n        line-height: 1.6;\n        color: #333333;\n        background-color: #f4f4f4;\n    }\n    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }\n    .header { background: #7C2529; padding: 15px 20px; text-align: center; }\n    .header .logo { font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }\n    .promo-banner { background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%); padding: 50px 20px; text-align: center; color: white; border-bottom: 5px solid #FDB913; }\n    .promo-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #FDB913; }\n    .promo-title { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 10px; }\n    .promo-subtitle { font-size: 20px; margin-bottom: 20px; font-weight: 400; }\n    .promo-cta { display: inline-block; background: #FDB913; color: #7C2529; padding: 15px 40px; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 30px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }\n    .category-hero { text-align: center; padding: 0; background: #f9f9f9; }\n    .category-hero img { width: 100%; max-width: 600px; height: auto; display: block; }\n    .timing-alert { background: #FFF9E6; border-left: 4px solid #FDB913; padding: 20px; margin: 0; }\n    .timing-alert h3 { font-size: 16px; color: #7C2529; margin-bottom: 8px; }\n    .timing-alert p { font-size: 14px; color: #555; margin: 5px 0; }\n    .timing-date { font-weight: 700; color: #7C2529; font-size: 18px; }\n    .products-section { padding: 40px 20px; background: white; }\n    .products-section h2 { font-size: 24px; margin-bottom: 10px; color: #222; }\n    .category-badge { display: inline-block; background: #7C2529; color: white; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }\n    .product-item { background: #f9f9f9; padding: 15px; margin-bottom: 12px; border-radius: 6px; border-left: 4px solid #7C2529; font-size: 15px; color: #333; }\n    .product-item:before { content: \"✓\"; color: #7C2529; font-weight: bold; margin-right: 10px; }\n    .offer-box { background: #7C2529; color: white; padding: 30px 20px; text-align: center; margin: 30px 20px; border-radius: 10px; }\n    .offer-box h3 { font-size: 32px; margin-bottom: 15px; }\n    .offer-code { background: white; color: #7C2529; padding: 15px 30px; display: inline-block; border-radius: 5px; font-size: 24px; font-weight: 900; letter-spacing: 3px; font-family: 'Courier New', monospace; margin: 10px 0; }\n    .offer-expiry { font-size: 14px; margin-top: 10px; color: #FDB913; }\n    .shop-section { text-align: center; padding: 30px 20px; background: white; }\n    .shop-btn { display: inline-block; background: #7C2529; color: white; padding: 18px 60px; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 5px; text-transform: uppercase; letter-spacing: 1px; }\n    .footer { background: #f4f4f4; padding: 30px 20px; text-align: center; border-top: 3px solid #7C2529; }\n    .footer-text { font-size: 12px; color: #666; margin: 10px 0; }\n    .social-icons { margin: 20px 0; }\n    .social-icons a { display: inline-block; margin: 0 8px; }\n    .social-icons img { width: 30px; height: 30px; }\n    .footer-links { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; }\n    .footer-links a { color: #7C2529; text-decoration: none; margin: 0 10px; font-size: 12px; }\n    .copyright { margin-top: 15px; font-size: 11px; color: #999; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\"><div class=\"logo\">UA LITTLE ROCK</div></div>\n    <div class=\"promo-banner\">\n        <div class=\"promo-label\">PERSONALIZED FOR YOU</div>\n        <div class=\"promo-title\">20% OFF</div>\n        <div class=\"promo-subtitle\">Beauty & Cosmetics</div>\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=beauty\" class=\"promo-cta\">Shop Beauty</a>\n    </div>\n    <div class=\"category-hero\"><img src=\"https://drive.google.com/uc?export=view&id=YOUR_BEAUTY_IMAGE_ID\" alt=\"Beauty\"></div>\n    <div class=\"timing-alert\">\n        <h3>⏰ Perfect Timing</h3>\n        <p>Our smart system suggests you might be shopping around <span class=\"timing-date\">{{3.predicted_purchase_date}}</span></p>\n        <p>We're preparing special offers just for you!</p>\n    </div>\n    <div class=\"products-section\">\n        <h2>Beauty Essentials for You</h2>\n        <div class=\"category-badge\">💄 Beauty</div>\n        {{#each 3.recommended_products}}\n        <div class=\"product-item\">{{this}}</div>\n        {{/each}}\n    </div>\n    <div class=\"offer-box\">\n        <h3>Your Exclusive Code</h3>\n        <div class=\"offer-code\">UALR20</div>\n        <div class=\"offer-expiry\">⏰ Expires in 48 hours</div>\n    </div>\n    <div class=\"shop-section\"><a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=beauty\" class=\"shop-btn\">Shop Now</a></div>\n    <div class=\"footer\">\n        <div class=\"social-icons\">\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733579.png\" alt=\"Twitter\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\"></a>\n        </div>\n        <p class=\"footer-text\"><strong>Smart email powered by Machine Learning</strong><br>This message was sent based on your shopping patterns.</p>\n        <div class=\"footer-links\">\n            <a href=\"#\">Unsubscribe</a>\n            <a href=\"#\">Preferences</a>\n            <a href=\"#\">Privacy Policy</a>\n        </div>\n        <p class=\"copyright\">© 2025 UA Little Rock. All rights reserved.</p>\n    </div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "id": 10,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent - Beauty",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 11,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Home & Garden Category",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.preferred_category}}",
+                                            "b": "Home & Garden",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Exclusive Offer</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #f4f4f4; }\n    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }\n    .header { background: #7C2529; padding: 15px 20px; text-align: center; }\n    .header .logo { font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }\n    .promo-banner { background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%); padding: 50px 20px; text-align: center; color: white; border-bottom: 5px solid #FDB913; }\n    .promo-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #FDB913; }\n    .promo-title { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 10px; }\n    .promo-subtitle { font-size: 20px; margin-bottom: 20px; font-weight: 400; }\n    .promo-cta { display: inline-block; background: #FDB913; color: #7C2529; padding: 15px 40px; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 30px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }\n    .category-hero { text-align: center; padding: 0; background: #f9f9f9; }\n    .category-hero img { width: 100%; max-width: 600px; height: auto; display: block; }\n    .timing-alert { background: #FFF9E6; border-left: 4px solid #FDB913; padding: 20px; margin: 0; }\n    .timing-alert h3 { font-size: 16px; color: #7C2529; margin-bottom: 8px; }\n    .timing-alert p { font-size: 14px; color: #555; margin: 5px 0; }\n    .timing-date { font-weight: 700; color: #7C2529; font-size: 18px; }\n    .products-section { padding: 40px 20px; background: white; }\n    .products-section h2 { font-size: 24px; margin-bottom: 10px; color: #222; }\n    .category-badge { display: inline-block; background: #7C2529; color: white; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }\n    .product-item { background: #f9f9f9; padding: 15px; margin-bottom: 12px; border-radius: 6px; border-left: 4px solid #7C2529; font-size: 15px; color: #333; }\n    .product-item:before { content: \"✓\"; color: #7C2529; font-weight: bold; margin-right: 10px; }\n    .offer-box { background: #7C2529; color: white; padding: 30px 20px; text-align: center; margin: 30px 20px; border-radius: 10px; }\n    .offer-box h3 { font-size: 32px; margin-bottom: 15px; }\n    .offer-code { background: white; color: #7C2529; padding: 15px 30px; display: inline-block; border-radius: 5px; font-size: 24px; font-weight: 900; letter-spacing: 3px; font-family: 'Courier New', monospace; margin: 10px 0; }\n    .offer-expiry { font-size: 14px; margin-top: 10px; color: #FDB913; }\n    .shop-section { text-align: center; padding: 30px 20px; background: white; }\n    .shop-btn { display: inline-block; background: #7C2529; color: white; padding: 18px 60px; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 5px; text-transform: uppercase; letter-spacing: 1px; }\n    .footer { background: #f4f4f4; padding: 30px 20px; text-align: center; border-top: 3px solid #7C2529; }\n    .footer-text { font-size: 12px; color: #666; margin: 10px 0; }\n    .social-icons { margin: 20px 0; }\n    .social-icons a { display: inline-block; margin: 0 8px; }\n    .social-icons img { width: 30px; height: 30px; }\n    .footer-links { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; }\n    .footer-links a { color: #7C2529; text-decoration: none; margin: 0 10px; font-size: 12px; }\n    .copyright { margin-top: 15px; font-size: 11px; color: #999; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\"><div class=\"logo\">UA LITTLE ROCK</div></div>\n    <div class=\"promo-banner\">\n        <div class=\"promo-label\">PERSONALIZED FOR YOU</div>\n        <div class=\"promo-title\">20% OFF</div>\n        <div class=\"promo-subtitle\">Home & Garden</div>\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=home\" class=\"promo-cta\">Shop Home & Garden</a>\n    </div>\n    <div class=\"category-hero\"><img src=\"https://drive.google.com/uc?export=view&id=YOUR_HOME_GARDEN_IMAGE_ID\" alt=\"Home & Garden\"></div>\n    <div class=\"timing-alert\">\n        <h3>⏰ Perfect Timing</h3>\n        <p>Our smart system suggests you might be shopping around <span class=\"timing-date\">{{3.predicted_purchase_date}}</span></p>\n        <p>We're preparing special offers just for you!</p>\n    </div>\n    <div class=\"products-section\">\n        <h2>Home & Garden Favorites</h2>\n        <div class=\"category-badge\">🏡 Home & Garden</div>\n        {{#each 3.recommended_products}}\n        <div class=\"product-item\">{{this}}</div>\n        {{/each}}\n    </div>\n    <div class=\"offer-box\">\n        <h3>Your Exclusive Code</h3>\n        <div class=\"offer-code\">UALR20</div>\n        <div class=\"offer-expiry\">⏰ Expires in 48 hours</div>\n    </div>\n    <div class=\"shop-section\"><a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=home\" class=\"shop-btn\">Shop Now</a></div>\n    <div class=\"footer\">\n        <div class=\"social-icons\">\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733579.png\" alt=\"Twitter\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\"></a>\n        </div>\n        <p class=\"footer-text\"><strong>Smart email powered by Machine Learning</strong><br>This message was sent based on your shopping patterns.</p>\n        <div class=\"footer-links\">\n            <a href=\"#\">Unsubscribe</a>\n            <a href=\"#\">Preferences</a>\n            <a href=\"#\">Privacy Policy</a>\n        </div>\n        <p class=\"copyright\">© 2025 UA Little Rock. All rights reserved.</p>\n    </div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 200
+                                }
+                            }
+                        },
+                        {
+                            "id": 12,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent - Home & Garden",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 200
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 13,
+                            "module": "email:ActionSendEmail",
+                            "version": 7,
+                            "parameters": {
+                                "account": null,
+                                "saveAfterSent": false
+                            },
+                            "filter": {
+                                "name": "Sports Category",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{3.preferred_category}}",
+                                            "b": "Sports",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "to": ["{{3.customer_email}}"],
+                                "subject": "🎁 Special Offer Just for You, {{3.customer_name}}!",
+                                "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Exclusive Offer</title>\n<style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #f4f4f4; }\n    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }\n    .header { background: #7C2529; padding: 15px 20px; text-align: center; }\n    .header .logo { font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }\n    .promo-banner { background: linear-gradient(135deg, #7C2529 0%, #9d2f33 100%); padding: 50px 20px; text-align: center; color: white; border-bottom: 5px solid #FDB913; }\n    .promo-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #FDB913; }\n    .promo-title { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 10px; }\n    .promo-subtitle { font-size: 20px; margin-bottom: 20px; font-weight: 400; }\n    .promo-cta { display: inline-block; background: #FDB913; color: #7C2529; padding: 15px 40px; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 30px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }\n    .category-hero { text-align: center; padding: 0; background: #f9f9f9; }\n    .category-hero img { width: 100%; max-width: 600px; height: auto; display: block; }\n    .timing-alert { background: #FFF9E6; border-left: 4px solid #FDB913; padding: 20px; margin: 0; }\n    .timing-alert h3 { font-size: 16px; color: #7C2529; margin-bottom: 8px; }\n    .timing-alert p { font-size: 14px; color: #555; margin: 5px 0; }\n    .timing-date { font-weight: 700; color: #7C2529; font-size: 18px; }\n    .products-section { padding: 40px 20px; background: white; }\n    .products-section h2 { font-size: 24px; margin-bottom: 10px; color: #222; }\n    .category-badge { display: inline-block; background: #7C2529; color: white; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }\n    .product-item { background: #f9f9f9; padding: 15px; margin-bottom: 12px; border-radius: 6px; border-left: 4px solid #7C2529; font-size: 15px; color: #333; }\n    .product-item:before { content: \"✓\"; color: #7C2529; font-weight: bold; margin-right: 10px; }\n    .offer-box { background: #7C2529; color: white; padding: 30px 20px; text-align: center; margin: 30px 20px; border-radius: 10px; }\n    .offer-box h3 { font-size: 32px; margin-bottom: 15px; }\n    .offer-code { background: white; color: #7C2529; padding: 15px 30px; display: inline-block; border-radius: 5px; font-size: 24px; font-weight: 900; letter-spacing: 3px; font-family: 'Courier New', monospace; margin: 10px 0; }\n    .offer-expiry { font-size: 14px; margin-top: 10px; color: #FDB913; }\n    .shop-section { text-align: center; padding: 30px 20px; background: white; }\n    .shop-btn { display: inline-block; background: #7C2529; color: white; padding: 18px 60px; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 5px; text-transform: uppercase; letter-spacing: 1px; }\n    .footer { background: #f4f4f4; padding: 30px 20px; text-align: center; border-top: 3px solid #7C2529; }\n    .footer-text { font-size: 12px; color: #666; margin: 10px 0; }\n    .social-icons { margin: 20px 0; }\n    .social-icons a { display: inline-block; margin: 0 8px; }\n    .social-icons img { width: 30px; height: 30px; }\n    .footer-links { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; }\n    .footer-links a { color: #7C2529; text-decoration: none; margin: 0 10px; font-size: 12px; }\n    .copyright { margin-top: 15px; font-size: 11px; color: #999; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"header\"><div class=\"logo\">UA LITTLE ROCK</div></div>\n    <div class=\"promo-banner\">\n        <div class=\"promo-label\">PERSONALIZED FOR YOU</div>\n        <div class=\"promo-title\">20% OFF</div>\n        <div class=\"promo-subtitle\">Sports & Fitness</div>\n        <a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=sports\" class=\"promo-cta\">Shop Sports</a>\n    </div>\n    <div class=\"category-hero\"><img src=\"https://drive.google.com/uc?export=view&id=YOUR_SPORTS_IMAGE_ID\" alt=\"Sports\"></div>\n    <div class=\"timing-alert\">\n        <h3>⏰ Perfect Timing</h3>\n        <p>Our smart system suggests you might be shopping around <span class=\"timing-date\">{{3.predicted_purchase_date}}</span></p>\n        <p>We're preparing special offers just for you!</p>\n    </div>\n    <div class=\"products-section\">\n        <h2>Gear Up for Your Next Workout</h2>\n        <div class=\"category-badge\">⚽ Sports</div>\n        {{#each 3.recommended_products}}\n        <div class=\"product-item\">{{this}}</div>\n        {{/each}}\n    </div>\n    <div class=\"offer-box\">\n        <h3>Your Exclusive Code</h3>\n        <div class=\"offer-code\">UALR20</div>\n        <div class=\"offer-expiry\">⏰ Expires in 48 hours</div>\n    </div>\n    <div class=\"shop-section\"><a href=\"https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email&category=sports\" class=\"shop-btn\">Shop Now</a></div>\n    <div class=\"footer\">\n        <div class=\"social-icons\">\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/733/733579.png\" alt=\"Twitter\"></a>\n            <a href=\"#\"><img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\"></a>\n        </div>\n        <p class=\"footer-text\"><strong>Smart email powered by Machine Learning</strong><br>This message was sent based on your shopping patterns.</p>\n        <div class=\"footer-links\">\n            <a href=\"#\">Unsubscribe</a>\n            <a href=\"#\">Preferences</a>\n            <a href=\"#\">Privacy Policy</a>\n        </div>\n        <p class=\"copyright\">© 2025 UA Little Rock. All rights reserved.</p>\n    </div>\n</div>\n</body>\n</html>",
+                                "cc": [],
+                                "bcc": [],
+                                "from": "",
+                                "sender": "",
+                                "headers": [],
+                                "replyTo": "",
+                                "priority": "normal",
+                                "inReplyTo": "",
+                                "references": [],
+                                "attachments": [],
+                                "contentType": "html"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 400
+                                }
+                            }
+                        },
+                        {
+                            "id": 14,
+                            "module": "google-sheets:updateARow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": null
+                            },
+                            "mapper": {
+                                "mode": "select",
+                                "from": "share",
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "1csRNhuvDQqLPoYcmEAAUgoez_vSf3nLGnILTb8af4f8",
+                                "tableFirstRow": "A1:Z1",
+                                "includesHeaders": true,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertDataOption": "OVERWRITE",
+                                "row": {
+                                    "10": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}",
+                                    "11": "{{3.predicted_purchase_date}}",
+                                    "12": "Email Sent - Sports",
+                                    "13": "{{3.confidence_score}}"
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 400
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}

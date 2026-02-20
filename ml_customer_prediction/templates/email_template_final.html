@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Offer for You</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+        color: #333333;
+        background-color: #f5f5f5;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+    }
+    /* Header */
+    .header {
+        background: #7C2529;
+        padding: 20px;
+        text-align: center;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 5px;
+    }
+    .tagline {
+        font-size: 11px;
+        color: #e0e0e0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    /* Hero */
+    .hero {
+        background: linear-gradient(135deg, #7C2529 0%, #a03034 100%);
+        color: white;
+        padding: 40px 30px;
+        text-align: center;
+    }
+    .hero h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    .badge {
+        display: inline-block;
+        background: #ffffff;
+        color: #7C2529;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    /* Content */
+    .content {
+        padding: 35px 30px;
+    }
+    .greeting {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #222222;
+    }
+    .message {
+        font-size: 16px;
+        color: #555555;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+    /* Stats Box */
+    .stats-box {
+        background: #f9f9f9;
+        border: 2px solid #7C2529;
+        border-radius: 10px;
+        padding: 25px;
+        margin: 25px 0;
+    }
+    .stats-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #7C2529;
+        margin-bottom: 15px;
+    }
+    .stat {
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .stat:last-child {
+        border-bottom: none;
+    }
+    .stat-label {
+        font-size: 14px;
+        color: #666666;
+    }
+    .stat-value {
+        font-size: 16px;
+        font-weight: bold;
+        color: #222222;
+    }
+    .accuracy {
+        background: #28a745;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+    /* Products */
+    .products {
+        margin: 30px 0;
+    }
+    .products h2 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #222222;
+    }
+    .category {
+        display: inline-block;
+        background: #7C2529;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 5px;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+    .product {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-left: 4px solid #7C2529;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        font-size: 15px;
+        color: #333333;
+    }
+    .product:before {
+        content: "✓";
+        color: #7C2529;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    /* CTA */
+    .cta {
+        text-align: center;
+        margin: 35px 0;
+    }
+    .btn {
+        display: inline-block;
+        background: #7C2529;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 18px 45px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .offer {
+        display: inline-block;
+        background: #ff4444;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+    .code {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #666666;
+    }
+    .code strong {
+        color: #7C2529;
+        font-size: 16px;
+        font-family: 'Courier New', monospace;
+    }
+    /* Footer */
+    .footer {
+        background: #333333;
+        color: #cccccc;
+        padding: 30px;
+        text-align: center;
+        font-size: 13px;
+    }
+    .social {
+        margin: 20px 0;
+    }
+    .social a {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    .social img {
+        width: 32px;
+        height: 32px;
+    }
+    .links {
+        margin: 20px 0;
+        padding-top: 20px;
+        border-top: 1px solid #555555;
+    }
+    .links a {
+        color: #aaaaaa;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 12px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">UA LITTLE ROCK</div>
+        <div class="tagline">Smart Shopping System</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>We Missed You! 👋</h1>
+        <p>{{3.customer_name}}, it's time to shop</p>
+        <div class="badge">🎯 Personalized Just For You</div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="greeting">
+            Hi {{3.customer_name}},
+        </div>
+
+        <div class="message">
+            Our AI noticed it's been a while since your last purchase. Based on your shopping habits, we think you're ready for something new! We've handpicked some items we know you'll love.
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-box">
+            <div class="stats-title">🤖 AI Prediction</div>
+
+            <div class="stat">
+                <span class="stat-label">Ready to shop in</span>
+                <span class="stat-value">{{3.predicted_days_until_next_purchase}} days</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Best time to buy</span>
+                <span class="stat-value">{{3.predicted_purchase_date}}</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Prediction accuracy</span>
+                <span class="accuracy">Very High</span>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="products">
+            <h2>Perfect Picks for You</h2>
+            <div class="category">{{3.preferred_category}}</div>
+
+            <p style="font-size: 14px; color: #666666; margin-bottom: 15px;">
+                We know you love <strong>{{3.preferred_category}}</strong>! Check these out:
+            </p>
+
+            {{#each 3.recommended_products}}
+            <div class="product">{{this}}</div>
+            {{/each}}
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+            <a href="https://yourstore.com/shop?customer_id={{3.customer_id}}&utm_source=ai_email" class="btn">
+                Shop Now
+            </a>
+            <div class="offer">
+                🔥 SPECIAL: 20% OFF
+            </div>
+            <div class="code">
+                Use code <strong>UALR20</strong>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-size: 13px; color: #999999; margin-top: 20px;">
+            ⏰ Offer expires in 48 hours
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="social">
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+        </div>
+
+        <p>
+            <strong>Why this email?</strong><br>
+            Our AI analyzed your shopping patterns and found the perfect time to reach out with products you'll love.
+        </p>
+
+        <p style="margin-top: 10px; font-size: 11px;">
+            ID: {{3.customer_id}}
+        </p>
+
+        <div class="links">
+            <a href="#">Unsubscribe</a>
+            <a href="#">Preferences</a>
+            <a href="#">Privacy</a>
+        </div>
+
+        <p style="margin-top: 15px; font-size: 11px; color: #888888;">
+            © 2025 UA Little Rock
+        </p>
+    </div>
+</div>
+</body>
+</html>
