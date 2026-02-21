@@ -6,8 +6,16 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'if echo \"$CLAUDE_TOOL_INPUT\" | grep -q \"\\.blueprint\\.json\"; then echo \"WARNING: You are about to edit a Make.com blueprint file. These should be edited in Make.com UI and re-exported. Proceed only if explicitly asked.\" >&2; fi'",
-            "description": "Warn when editing blueprint JSON files"
+            "command": "bash .claude/hooks/warn-blueprint-edit.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/warn-blueprint-edit.sh"
           }
         ]
       }
@@ -18,8 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | python -c \"import sys,json; print(json.load(sys.stdin).get(\\\"file_path\\\",\\\"\\\"))\" 2>/dev/null); if echo \"$FILE\" | grep -qE \"\\.json$\"; then python -m json.tool < \"$FILE\" > /dev/null 2>&1 || echo \"ERROR: Invalid JSON written to $FILE\" >&2; fi'",
-            "description": "Validate JSON syntax after writing .json files"
+            "command": "bash .claude/hooks/validate-json.sh"
           }
         ]
       }
