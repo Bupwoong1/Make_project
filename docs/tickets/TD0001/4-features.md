@@ -6,7 +6,7 @@
   "test": "Blueprint JSON parses without errors after modification",
   "command": "python -m json.tool < ualr_email_automation/blueprints/UALR_Complete_All_8_Majors.blueprint.json > /dev/null",
   "expected": "Exit code 0, no error output",
-  "passes": false
+  "passes": true
 }
 ```
 
@@ -16,7 +16,7 @@
   "test": "All 8 email modules contain <img> tag with UALR logo URL",
   "command": "grep -c 'ua-little-rock-v-rgb.png' ualr_email_automation/blueprints/UALR_Complete_All_8_Majors.blueprint.json",
   "expected": "Count = 8 (one per email module)",
-  "passes": false
+  "passes": true
 }
 ```
 
@@ -26,7 +26,7 @@
   "test": "No email modules still use text-only logo div",
   "command": "grep -c '<div class=.logo.>UA LITTLE ROCK</div>' ualr_email_automation/blueprints/UALR_Complete_All_8_Majors.blueprint.json",
   "expected": "Count = 0 (all text logos replaced)",
-  "passes": false
+  "passes": true
 }
 ```
 
@@ -39,6 +39,6 @@
     "ualr_email_automation/templates/email_template_ualr.html"
   ],
   "expected": "Each file contains <img> tag with UALR logo URL",
-  "passes": false
+  "passes": true
 }
 ```
