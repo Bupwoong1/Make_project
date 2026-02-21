@@ -28,7 +28,7 @@ hero_images = {
     'hero_finance.jpg': 'https://ualr.edu/economics/wp-content/uploads/sites/93/2024/11/business-team-winners1.jpg',
     'hero_intl_business.jpg': 'https://ualr.edu/accounting/wp-content/uploads/sites/76/2024/11/business-student-portrait-2-2023.jpg',
     'hero_management.jpg': 'https://ualr.edu/management/wp-content/uploads/sites/108/2024/11/business-student-portrait-2023.jpg',
-    'hero_marketing.jpg': 'https://ualr.edu/marketing/wp-content/uploads/sites/109/2024/11/business-student-portrait-2-2023.jpg',
+    'hero_marketing.jpg': 'https://ualr.edu/business/wp-content/uploads/sites/163/2024/12/BIZ-MBA-portrait-2024_BG_200.jpg',
 }
 
 
